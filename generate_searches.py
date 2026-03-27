@@ -1,17 +1,13 @@
 # %% Imports
 from llama_cpp import Llama
+import os
 
-# llm = Llama.from_pretrained(
-# 	repo_id="google/gemma-7b-it",
-# 	filename="gemma-7b-it.gguf",
-# )
+# %% Define file paths
+models_dir = "models"
+llm = "gemma-7b-it.gguf"
+os.makedirs(models_dir, exist_ok=True)
 
-# %% Figuring things out
-llm.create_chat_completion(
-	messages = [
-		{
-			"role": "user",
-			"content": "What is the capital of France?"
-		}
-	]
+# %% Load model
+model = Llama(
+    model_path = f"{models_dir}/{llm}"
 )
