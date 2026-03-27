@@ -30,4 +30,4 @@ Finally, I believe (I'll have to confirm this later) that I can have this projec
 1) Gather the top 3 results of each of the 5 searches
 1) Summarize the information with links provided for each.
 
-This process is definitely gonna have some changes (and challenges) along the way, but this is the general idea we're going for.
+This process is definitely gonna have some changes (and challenges) along the way, but this is the general idea we're going for. If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
