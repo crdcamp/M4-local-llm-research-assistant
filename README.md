@@ -42,6 +42,6 @@ We'll need to ensure the prompts are output is a nicely structured way so they c
 
 # Models I'm Testing
 
-We'll start by strictly using [gemma-7b-it](https://huggingface.co/google/gemma-7b-it/blob/main/gemma-7b-it.gguf) - A Google Gemma instruct model with 7 billion parameters. I don't have much storage on this macbook, so we'll just try using only one model for now. This one happens to be the "most liked" out of all the text generation GGUF models.
+## Qwen3-8B
 
-Depending on how that goes... this list might grow a bit.
+[Link to model](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
