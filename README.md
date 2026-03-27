@@ -33,3 +33,13 @@ Finally, I believe (I'll have to confirm this later) that I can have this projec
 This process is definitely gonna have some changes (and challenges) along the way, but this is the general idea we're going for. I'll test some of the most popular models and determine if using reasoning models is necessary (I'm hoping and assuming not).
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
+
+# Starting Point
+
+I think the best place to start is by creating some structure for generating a bunch of searches when the model is given a research question (prompt). 
+
+We'll need to ensure the prompts are output is a nicely structured way so they can be handed to the search engine easily.
+
+# Models I'm Testing
+
+We'll start by strictly using [gemma-7b-it](https://huggingface.co/google/gemma-7b-it/blob/main/gemma-7b-it.gguf) - A Google Gemma instruct model with 7 billion parameters. I don't have much storage on this macbook, so we'll just try using only one model for now. This one happens to be the "most liked" out of all the text generation GGUF models.
