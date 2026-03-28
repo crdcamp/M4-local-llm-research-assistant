@@ -1,5 +1,3 @@
-For now, this `README.md` will serve as a template for how to approach this project.
-
 # The General Idea
 
 I primarily use AI for gathering information and speeding up the process of using a search engine. I believe it's up to the user to actually investigate the provided material, as I've had an LLM tell me the wrong info way too many times.
@@ -10,8 +8,8 @@ I don't like paying for AI subscriptions either, since now that I've gained enou
 
 # Models I'm Testing
 
-* [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
-* [GLM-4.6-Q8](https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF)
+* [Qwen/Qwen3-8B-GGUF](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
+* [unsloth/GLM-4.6V-Flash-GGUF](https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF)
 
 # Project Structure
 
@@ -39,8 +37,10 @@ This process is definitely gonna have some changes (and challenges) along the wa
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
 
-## Starting Point
+## Starting Point - Generating Various Internet Searches
 
 I think the best place to start is by creating some structure for generating a bunch of searches when the model is given a research question (prompt). We'll start with a **very** rough draft for this and make it better when a structure is more in place.
 
 Essentially, it's probably gonna take some research to make this work.
+
+Note: You may want to look into [`llama_chat_apply_template`](https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.llama_cpp.llama_chat_apply_template) for getting a desired output for the internet searches.
