@@ -8,6 +8,11 @@ I don't like paying for AI subscriptions either, since now that I've gained enou
 
 **So, this is kind of what lead me to this project:** The goal is to create a local LLM with enough provided tools to act as a "research assistant" (even though I'm not a huge fan of that phrase). The intention is to have a model that runs well locally on a Macbook M4 chip. It will be used strictly for gathering information together, give a general idea of the provided info, and (most importantly) provide links to the information it gathered.
 
+# Models I'm Testing
+
+* [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
+* [GLM-4.6-Q8](https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF)
+
 # Project Structure
 
 While I've touched on the relevant material for making something like this happen in the past, it wasn't until now that I've actually thought of a way to make this work and be legitimately useful. So, here's how we're gonna structure it:
@@ -34,18 +39,8 @@ This process is definitely gonna have some changes (and challenges) along the wa
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
 
-# Starting Point
+## Starting Point
 
-I think the best place to start is by creating some structure for generating a bunch of searches when the model is given a research question (prompt). 
+I think the best place to start is by creating some structure for generating a bunch of searches when the model is given a research question (prompt). We'll start with a **very** rough draft for this and make it better when a structure is more in place.
 
-We'll need to ensure the prompts are output is a nicely structured way so they can be handed to the search engine easily.
-
-# Models I'm Testing
-
-## Qwen3-8B
-
-[Link to model](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
-
-## GLM-4.6-Q8
-
-[Link to Model](https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF)
+Essentially, it's probably gonna take some research to make this work.
