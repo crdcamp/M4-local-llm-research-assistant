@@ -45,3 +45,7 @@ We'll need to ensure the prompts are output is a nicely structured way so they c
 ## Qwen3-8B
 
 [Link to model](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
+
+## GLM-4.6-Q8
+
+[Link to Model](https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF)
