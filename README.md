@@ -8,7 +8,10 @@ I don't like paying for AI subscriptions either, since now that I've gained enou
 
 # Models I'm Testing
 
+*Note: Adjust these links to be download links rather than repo home pages*
+
 * [Mistral-7B-Instruct (Quantized down to 4 bits)](https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF?show_file_info=mistral-7b-instruct-v0.1.Q4_K_M.gguf)
+* [bartowski/Qwen2.5-7B-Instruct-GGUF (Quantized down to 4 bits)](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF)
 
 # Project Structure
 
