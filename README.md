@@ -19,7 +19,7 @@ While I've touched on the relevant material for making something like this happe
 
 ## llama.cpp
 
-[llama.cpp](https://github.com/ggml-org/llama.cpp) is the entry point for this project. It requires models to be stored in a [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) file format, which enables fast loading and saving of models. Essentially, it's just a way to get these models running a bit more smoothly in the Python scripts, while avoiding the need to load a model each time a script is run (an issue I didn't know how to sidestep in the past).
+[llama.cpp](https://github.com/ggml-org/llama.cpp) is the entry point for this project. It requires models to be stored in a [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) file format, which enables fast loading and saving of models. Essentially, it's just a way to get these models running a bit more smoothly in the Python scripts.
 
 [llama.cpp](https://github.com/ggml-org/llama.cpp) also has [`llama-cli`](https://github.com/ggml-org/llama.cpp?tab=readme-ov-file#llama-cli) which can be used for experimenting with these models. So, I won't have to make any sort of interface for testing or mess around with code too much once I get this set up.
 
