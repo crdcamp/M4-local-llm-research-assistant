@@ -4,16 +4,18 @@ from llama_cpp import Llama
 # Create MCP server
 mcp = FastMCP("Research Assistant")
 
+# Load model
+model = Llama(
+    model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+    max_tokens=1024,
+    verbose=False,
+    chat_format="chatml"
+)
+
 @mcp.tool()
 # This needs to be adjusted to be output as a Python list...
 def generate_search_queries(user_prompt: str) -> str:
     """Generate five targeted search engine queries to research a given topic or question. Use this tool when you need to find information on the web about a specific subject."""
-    model = Llama(
-        model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
-        max_tokens=1024,
-        verbose=False,
-        chat_format="chatml"
-    )
 
     response = model.create_chat_completion(
         messages=[
