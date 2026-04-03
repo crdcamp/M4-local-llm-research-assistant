@@ -8,8 +8,7 @@ I don't like paying for AI subscriptions either, since now that I've gained enou
 
 # Models I'm Testing
 
-* [Qwen/Qwen3-8B-GGUF](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q8_0.gguf)
-* [unsloth/GLM-4.6V-Flash-GGUF](https://huggingface.co/unsloth/GLM-4.6V-Flash-GGUF)
+* [Mistral-7B-Instruct (Quantized down to 4 bits)](https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF?show_file_info=mistral-7b-instruct-v0.1.Q4_K_M.gguf)
 
 # Project Structure
 
