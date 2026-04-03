@@ -5,6 +5,7 @@ from llama_cpp import Llama
 mcp = FastMCP("Research Assistant")
 
 # Load model
+# THIS SHOULD PROBABLY GO IN `main.py`
 model = Llama(
     model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
     max_tokens=2048,
