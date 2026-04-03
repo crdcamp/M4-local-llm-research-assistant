@@ -1,14 +1,13 @@
-# %% Imports
 from mcp.server import FastMCP
 from llama_cpp import Llama
 
-# %% Create MCP server
+# Create MCP server
 mcp = FastMCP("Research Assistant")
 
-# %% Define Tools
 @mcp.tool()
+# This needs to be adjusted to be output as a Python list...
 def generate_search_queries(user_prompt: str) -> str:
-    """Output exactly five concise search engine queries a person could enter into a browser to research it"""
+    """Output exactly five concise search engine queries a person could enter into a browser to research the given topic"""
     model = Llama(
         model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
         max_tokens=1024,
@@ -29,3 +28,6 @@ def generate_search_queries(user_prompt: str) -> str:
     )
 
     return response["choices"][0]["message"]["content"]
+
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
