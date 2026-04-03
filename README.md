@@ -6,7 +6,7 @@ I don't like paying for AI subscriptions either, since now that I've gained enou
 
 **So, this is kind of what lead me to this project:** The goal is to create a local LLM with enough provided tools to act as a "research assistant" (even though I'm not a huge fan of that phrase). The intention is to have a model that runs well locally on a Macbook M4 chip. It will be used strictly for gathering information together, give a general idea of the provided info, and (most importantly) provide links to the information it gathered.
 
-To summarize, I'm trying to create an extremely scaled down version of [Perplexity](https://www.perplexity.ai/) that runs locally with low hardware requirements.
+To summarize, I'm trying to create an extremely scaled down version of [Perplexity](https://www.perplexity.ai/) that runs locally with low hardware requirements™.
 
 # The Model I'm Using
 
