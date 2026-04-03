@@ -2,8 +2,12 @@
 from llama_cpp import Llama
 import os
 
-# CONCLUSION: Qwen (assuming it can be used for tool calling) is unecessary for search generation
-# Mistral will do this instead
+"""
+CONCLUSION:
+    I think Qwen might be the only model needed if I can get it to focus enough through system prompts
+    and chat templates. Given that the system prompt can be used to narrow down the output and limit
+    token usage, I see no point in using Mistral at all.
+"""
 
 # %% Define file paths and model parameters
 models_dir = "../models"
@@ -46,7 +50,7 @@ chat_qwen_7b_Q4 = Llama(
 SIMPLE TESTS:
     Just seeing if things are running smoothly. We'll add system prompts and chat
     templates later.
-"""
+""";
 
 # %% Generate searches for Mistral
 print(chat_mistral_7b_Q4.create_chat_completion(
@@ -67,7 +71,7 @@ print(chat_qwen_7b_Q4.create_chat_completion(
 """
 ADDING SYSTEM PROMPTS:
     Now let's add system prompts to see if this improves the results at all
-"""
+""";
 
 # %% Generate searches with Mistral with system prompt
 print(chat_mistral_7b_Q4.create_chat_completion(
