@@ -1,11 +1,10 @@
 from mcp.server import FastMCP
 from llama_cpp import Llama
+from pydantic import BaseModel
+import json
 
-# Create MCP server
 mcp = FastMCP("Research Assistant")
 
-# Load model
-# THIS SHOULD PROBABLY GO IN `main.py`
 model = Llama(
     model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
     max_tokens=2048,
@@ -13,25 +12,33 @@ model = Llama(
     chat_format="chatml"
 )
 
+class SearchQueries(BaseModel):
+    queries: list[str]
+
 @mcp.tool()
-# This needs to be adjusted to be output as a Python list...
-def generate_search_queries(user_prompt: str) -> str:
-    """Generate five targeted search enginew queries to research a given topic or question. Use this tool when you need to find information on the web about a specific subject."""
+def generate_search_queries(user_prompt: str) -> list[str]:
+    """Generate five targeted search engine queries to research a given topic or question."""
 
     response = model.create_chat_completion(
         messages=[
             {
-            "role": "system",
-            "content": "You are a search query generator. When given a question or topic, output exactly five concise search engine queries a person could enter into a browser to research it. Format your response as a numbered list (1-5) with one query per line. Output only the numbered list — no preamble, explanation, or commentary."
-        },
-        {
-            "role": "user",
-            "content": user_prompt
-        }]
+                "role": "system",
+                "content": "You are a search query generator. When given a question or topic, generate exactly five concise search engine queries a person could enter into a browser to research it."
+            },
+            {
+                "role": "user",
+                "content": user_prompt
+            }
+        ],
+        response_format={
+            "type": "json_object",
+            "schema": SearchQueries.model_json_schema()
+        }
     )
 
-    return response["choices"][0]["message"]["content"]
+    content = response["choices"][0]["message"]["content"]
+    parsed = json.loads(content)
+    return parsed["queries"]
 
-# Run the MCP server
 if __name__ == "__main__":
     mcp.run(transport="stdio")
