@@ -35,10 +35,11 @@ Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options
 - [x] Give an input prompt (a research question)
 - [x] Generate 5 internet search queries to execute for input prompt
 - [x] From these 5 internet search queries, retrieve the top 4 URLs
-- [ ] Retrieve the HTML content from each URL and convert to markdown
-- [ ] Have LLM interpret the markdown results and provide links for each summary (might need to add additional steps for this one. This integration will be started in the `testing` directory)
+- [ ] Retrieve the HTML content from each URL and convert to markdown using [markdownify](https://pypi.org/project/markdownify/)
+- [ ] Have the LLM summarize the markdown results and provide links for each summary (might need to add additional steps for this one)
 - [ ] Use [Sampling](https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling) to define steps taken to conduct research
 - [ ] Test initial project structure using the [llama.cpp web UI](https://github.com/ggml-org/llama.cpp/discussions/16938)
+- [ ] Clean up project dependencies
 - [ ] Use the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) to properly handle Client/Server interaction (for properly loading and unloading model based on where you are in the workflow) - Could save a lot of ram if this is done right
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
