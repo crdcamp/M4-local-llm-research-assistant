@@ -2,17 +2,17 @@
 
 I primarily use AI for gathering information and speeding up the process of using a search engine. I believe it's up to the user to actually investigate the provided material, as I've had an LLM tell me the wrong info way too many times.
 
-I don't like paying for AI subscriptions either, since now that I've gained enough understanding of coding to the point where I don't need all the tokens that a paid plan provides.
+I don't like paying for AI subscriptions either (well... who does?), since now that I've gained enough understanding of coding to the point where I don't need all the tokens that a paid plan provides.
 
-**So, this is kind of what lead me to this project:** The goal is to create a local LLM with enough provided tools to act as a "research assistant" (even though I'm not a huge fan of that phrase). The intention is to have a model that runs well locally on a Macbook M4 chip. It will be used strictly for gathering information together, give a general idea of the provided info, and (most importantly) provide links to the information it gathered.
+**So, this is kind of what lead me to this project:** The goal is to create a local LLM with enough provided tools to act as a "research assistant" (even though I'm not a huge fan of that phrase). The intention is to have a model that runs well locally on a Macbook M4 chip (the base 16 gig model). It will be used strictly for gathering information together, give a general idea of the provided info, and provide links to the information it gathered.
 
-To summarize, I'm trying to create an extremely scaled down version of [Perplexity](https://www.perplexity.ai/) that runs locally with low hardware requirements™.
+To summarize, I'm trying to create an extremely scaled down version of [Perplexity](https://www.perplexity.ai/) that runs locally with low hardware requirements.
 
 # The Model I'm Using
 
-* [bartowski/Qwen2.5-7B-Instruct-GGUF (Quantized down to 4 bits)](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/blob/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf)
+* [bartowski/Qwen2.5-7B-Instruct-Q4_K_M.gguf](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/blob/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf) (A Qwen model quantized down to 4 bits)
 
-# Project Structure
+# The Process
 
 While I've touched on the relevant material for making something like this happen in the past, it wasn't until now that I've actually thought of a way to make this work and be legitimately useful. So, here's how we're gonna structure it:
 
@@ -24,24 +24,66 @@ While I've touched on the relevant material for making something like this happe
 
 Moreover, you can also [quantize models](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md), which reduces the precision of their weights which also requires less computational demand (I'm sure I'm leaving out many technical details here but that's the general idea). I can play around with this if needed, but I'm hoping I won't need to.
 
-Finally, I believe (I'll have to confirm this later) that I can have this project run in a web page with a nice interface. But, that's a problem I'll have to get to and sort out later.
+I also believe (I'll have to confirm this later) that I can have this project run in a web page with a nice interface. But, that's a problem I'll have to get to and sort out later.
 
-## The Process
+Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options for playing around with the model's interaction with the hardware, so (with enough research), I'll have a lot of ways to make things run more smoothly when the general structure is complete.
 
-1) Give input prompt (a research question)
-1) Generate 5 internet searches to execute for input prompt
-1) Use a tool to search the internet for each of these prompts
-1) Gather the top 3 results of each of the 5 searches
-1) Summarize the information with links provided for each.
+## Workflow Outline
 
-This process is definitely gonna have some changes (and challenges) along the way, but this is the general idea we're going for. I'll test some of the most popular models and determine if using reasoning models is necessary (I'm hoping and assuming not).
+- [x] Give an input prompt (a research question)
+- [x] Generate 5 internet search queries to execute for input prompt
+- [x] From these 5 internet search queries, retrieve the top 4 URLs
+- [ ] Retrieve the HTML content from each URL and convert to markdown
+- [ ] Have LLM interpret the markdown results and provide links for each summary (might need to add additional steps for this one)
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
 
-## Starting Point - Generating Various Internet Searches
+# Some Notes for Me
 
-I think the best place to start is by creating some structure for generating a bunch of searches when the model is given a research question (prompt). We'll start with a **very** rough draft for this and make it better when a structure is more in place.
+## General
 
-Essentially, it's probably gonna take some research to make this work.
+* [MCP Course](https://huggingface.co/learn/mcp-course/unit0/introduction)
+* [Introduction to creating MCP server](https://www.youtube.com/watch?v=exzrb5QNUis)
 
-Note: You may want to look into [`llama_chat_apply_template`](https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.llama_cpp.llama_chat_apply_template) for getting a desired output for the internet searches.
+## Getting Started with [`uv`](https://github.com/astral-sh/uv)
+
+```terminal
+uv venv
+source .venv/bin/activate
+uv pip install "mcp[cli]" llama-cpp-python
+```
+
+## Running MCP with `dev` Command
+
+```terminal
+mcp dev server.py
+```
+
+## Installing `requirements.txt` with `uv`
+
+To [import dependencies from `requirements.txt` file:](*https://docs.astral.sh/uv/concepts/projects/dependencies/#importing-dependencies-from-requirements-files)
+
+```terminal
+uv add -r requirements.txt
+```
+
+See the [pip migration guide](https://docs.astral.sh/uv/guides/migration/pip-to-project/#importing-requirements-files) for more details.
+
+## Use [Sampling](https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling) to Define Full Workflow
+
+Sampling allows Servers to request the Client (specifically, the Host application) to perform LLM interactions.
+
+* Enables server-driven agentic behaviors and potentially **recursive or multi-step interactions**.
+* Use cases: Complex multi-step tasks, autonomous agent workflows, interactive processes.
+
+**Example:** A Server might request the Client to analyze data it has processed:
+
+```python
+def request_sampling(messages, system_prompt=None, include_context="none"):
+    """Request LLM sampling from the client."""
+    # In a real implementation, this would send a request to the client
+    return {
+        "role": "assistant",
+        "content": "Analysis of the provided data..."
+    }
+```

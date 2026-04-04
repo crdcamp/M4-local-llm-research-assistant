@@ -56,5 +56,20 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
     return results
 
+#@mcp.tool()
+# def get_query_link_results():
+"""
+Using a python library to convert HTML to markdown, gather text from all the web pages
+so that the model can analyze the results from the links.
+
+This might require messing around with the context length a bit (might have to limit the
+search results to 3 links instead of 4)...
+"""
+
+"""
+USE SAMPLING TO DEFINE THE PATH OF TOOL USAGE:
+https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling
+"""
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
