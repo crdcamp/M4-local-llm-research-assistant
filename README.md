@@ -35,6 +35,7 @@ Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options
 - [x] From these 5 internet search queries, retrieve the top 4 URLs
 - [ ] Retrieve the HTML content from each URL and convert to markdown
 - [ ] Have LLM interpret the markdown results and provide links for each summary (might need to add additional steps for this one)
+- [ ] Use the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) to properly handle Client/Server interaction
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
 
@@ -44,6 +45,12 @@ If the local LLMs can't generate good google searches, then we might have to loo
 
 * [MCP Course](https://huggingface.co/learn/mcp-course/unit0/introduction)
 * [Introduction to creating MCP server](https://www.youtube.com/watch?v=exzrb5QNUis)
+
+## [MCP Host and Client](https://huggingface.co/learn/mcp-course/unit1/key-concepts#components)
+
+* **Host:** The user-facing AI application that end-users interact with directly. Examples include Anthropic’s Claude Desktop, AI-enhanced IDEs like Cursor, inference libraries like Hugging Face **Python SDK**, or custom applications built in libraries like LangChain or smolagents. Hosts initiate connections to MCP Servers and orchestrate the overall flow between user requests, LLM processing, and external tools.
+* **Client:** A component within the host application that manages communication with a specific MCP Server. Each Client maintains a 1:1 connection with a single Server, handling the protocol-level details of MCP communication and acting as an intermediary between the Host’s logic and the external Server.
+* **Server:** An external program or service that exposes capabilities (Tools, Resources, Prompts) via the MCP protocol.
 
 ## Getting Started with [`uv`](https://github.com/astral-sh/uv)
 
@@ -87,3 +94,12 @@ def request_sampling(messages, system_prompt=None, include_context="none"):
         "content": "Analysis of the provided data..."
     }
 ```
+
+## [SDK Overview](https://huggingface.co/learn/mcp-course/unit1/sdk#sdk-overview)
+
+SDKs handle the low-level protocol details. More specifically, SDKs handle:
+* Protocol-level communication
+* Capability registration and discovery
+* Message serialization/deserialization
+* Connection management
+* Error handling
