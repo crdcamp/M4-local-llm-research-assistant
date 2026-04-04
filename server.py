@@ -43,6 +43,8 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     return parsed["queries"]
 
 @mcp.tool()
+# CHANGE TO LIST COMPREHENSION METHOD
+# PROBABLY SHOULD RENAME THIS TO GET_LINKS OR SOMETHING LIKE THAT
 def search_the_internet(search_input: str):
     """ADD DESCRIPTION HERE"""
     results = DDGS().text(search_input, max_results=4)
