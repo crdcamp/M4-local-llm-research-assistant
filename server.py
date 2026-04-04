@@ -93,7 +93,8 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
     return results
 
 """
-Then, add another tool here that uses the LLM to strip out the unneeded text for each result
+Then, add another tool here that uses the LLM to strip out the unneeded text for each result...
+Or something like that...
 """
 
 if __name__ == "__main__":

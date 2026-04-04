@@ -35,7 +35,7 @@ Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options
 - [x] Give an input prompt (a research question)
 - [x] Generate 5 internet search queries to execute for input prompt
 - [x] From these 5 internet search queries, retrieve the top 4 URLs
-- [ ] Retrieve the HTML content from each URL and convert to markdown using [markdownify](https://pypi.org/project/markdownify/)
+- [x] Retrieve the HTML content from each URL and convert to markdown using [markdownify](https://pypi.org/project/markdownify/)
 - [ ] Have the LLM summarize the markdown results and provide links for each summary (might need to add additional steps for this one)
 - [ ] Use [Sampling](https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling) to define steps taken to conduct research
 - [ ] Test initial project structure using the [llama.cpp web UI](https://github.com/ggml-org/llama.cpp/discussions/16938)
