@@ -2,9 +2,11 @@ from mcp.server import FastMCP
 from llama_cpp import Llama
 from pydantic import BaseModel
 import json
+from ddgs import DDGS
 
 mcp = FastMCP("Research Assistant")
 
+print("Loading model...")
 model = Llama(
     model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
     max_tokens=2048,
@@ -39,6 +41,17 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     content = response["choices"][0]["message"]["content"]
     parsed = json.loads(content)
     return parsed["queries"]
+
+@mcp.tool()
+def search_the_internet(search_input: str):
+    """ADD DESCRIPTION HERE"""
+    results = DDGS().text(search_input, max_results=4)
+
+    links = []
+    for r in results:
+        links.append(r["href"])
+
+    return links
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
