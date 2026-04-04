@@ -4,8 +4,11 @@ from pydantic import BaseModel
 import json
 from ddgs import DDGS
 
+# Start MCP server
 mcp = FastMCP("Research Assistant")
 
+# LOOK INTO PROPERLY LOADING THE MODEL:
+# https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#core-concepts
 print("Loading model...")
 model = Llama(
     model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
@@ -14,6 +17,7 @@ model = Llama(
     chat_format="chatml"
 )
 
+# Structured list output for `generate_search_queries`
 class SearchQueries(BaseModel):
     queries: list[str]
 
