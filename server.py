@@ -40,20 +40,17 @@ def generate_search_queries(user_prompt: str) -> list[str]:
 
     content = response["choices"][0]["message"]["content"]
     parsed = json.loads(content)
+
     return parsed["queries"]
 
 @mcp.tool()
-# CHANGE TO LIST COMPREHENSION METHOD
-# PROBABLY SHOULD RENAME THIS TO GET_LINKS OR SOMETHING LIKE THAT
-def search_the_internet(search_input: str):
-    """ADD DESCRIPTION HERE"""
-    results = DDGS().text(search_input, max_results=4)
+def get_search_query_links(search_queries: list[str]) -> dict:
+    """Takes a list of search queries and returns a dict mapping each query to a list of up to 4 result URLs."""
+    results = {}
+    for query in search_queries:
+        results[query] = [r["href"] for r in DDGS().text(query, max_results=4)]
 
-    links = []
-    for r in results:
-        links.append(r["href"])
-
-    return links
+    return results
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

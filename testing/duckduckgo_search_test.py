@@ -1,5 +1,6 @@
 # %% Imports
 from ddgs import DDGS
+from pprint import pprint
 
 # %% Test
 results = DDGS().text("python programming", max_results=4)
@@ -14,7 +15,6 @@ print(href_list)
 
 
 # %% Testing Implementation
-from pprint import pprint
 def get_search_query_links(search_queries: list[str]) -> dict:
     results = {}
     for query in search_queries:
