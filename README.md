@@ -37,7 +37,6 @@ Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options
 - [x] From these 5 internet search queries, retrieve the top 4 URLs
 - [x] Retrieve the HTML content from each URL and convert to markdown using [markdownify](https://pypi.org/project/markdownify/)
 - [ ] Have the LLM summarize the markdown results and provide links for each summary (might need to add additional steps for this one)
-- [ ] Use [Sampling](https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling) to define steps taken to conduct research
 - [ ] Test initial project structure using the [llama.cpp web UI](https://github.com/ggml-org/llama.cpp/discussions/16938)
 - [ ] Clean up project dependencies
 - [ ] Use the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) to properly handle Client/Server interaction (for properly loading and unloading model based on where you are in the workflow) - Could save a lot of ram if this is done right
@@ -80,25 +79,6 @@ uv add -r requirements.txt
 ```
 
 See the [pip migration guide](https://docs.astral.sh/uv/guides/migration/pip-to-project/#importing-requirements-files) for more details.
-
-## Use [Sampling](https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling) to Define Full Workflow
-
-Sampling allows Servers to request the Client (specifically, the Host application) to perform LLM interactions.
-
-* Enables server-driven agentic behaviors and potentially **recursive or multi-step interactions**.
-* Use cases: Complex multi-step tasks, autonomous agent workflows, interactive processes.
-
-**Example:** A Server might request the Client to analyze data it has processed:
-
-```python
-def request_sampling(messages, system_prompt=None, include_context="none"):
-    """Request LLM sampling from the client."""
-    # In a real implementation, this would send a request to the client
-    return {
-        "role": "assistant",
-        "content": "Analysis of the provided data..."
-    }
-```
 
 ## [SDK Overview](https://huggingface.co/learn/mcp-course/unit1/sdk#sdk-overview)
 
