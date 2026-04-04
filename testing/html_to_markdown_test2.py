@@ -22,10 +22,9 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
             try:
                 print("Sending request for url: ", url)
                 r = requests.get(url, headers=HEADERS, timeout=10)
-                results[query].append(md(r.text))
-            except requests.exceptions.Timeout:
-                print("Error: request timed out for ", url)
-                continue
+                results[query].append(md(r.text, strip=['a', 'img', 'nav', 'header', 'footer']))
+            except Exception as e:
+                print(f"Error fetching {url}: {e}")
         print()
 
     return results
@@ -37,3 +36,5 @@ print()
 md_dict = convert_html_to_markdown(url_dict)
 
 # %% Inspect
+for key, item in md_dict.items():
+    print(f"Key: {key}\nItem:\n{item}\n\n")
