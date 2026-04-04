@@ -22,7 +22,7 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
 
     for query, urls in query_url_dict.items():
         print("Beginning requests for query: ", query)
-        results[query] = []
+        results[query] = {}
         for url in urls:
             try:
                 print("Sending request for url: ", url)
@@ -36,7 +36,8 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
                 main = soup.find('main') or soup.find('article') or soup.find(id='content') or soup.find(class_='content') or soup.body
                 clean_html = str(main) if main else str(soup)
 
-                results[query].append(md(clean_html, strip=['a', 'img']))
+                results[query][url] = md(clean_html, strip=['a', 'img'])
+
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
         print()
@@ -50,5 +51,6 @@ print()
 md_dict = convert_html_to_markdown(url_dict)
 
 # %% Inspect
-for key, item in md_dict.items():
-    print(f"Key: {key}\nItem:\n{item}\n\n")
+for query, url_dict in md_dict.items():
+    for url, content in url_dict.items():
+        print(f"Query: {query}\nURL: {url}\nContent:\n{content}\n\n")

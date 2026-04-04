@@ -65,8 +65,11 @@ def get_search_query_links(search_queries: list[str]) -> dict:
     return query_url_dict
 
 #@mcp.tool()
-def convert_html_to_markdown(query_url_dict: dict) -> dict:
+#def convert_html_to_markdown(query_url_dict: dict) -> dict:
 
+"""
+Then add another tool here that uses the LLM to strip out the unneeded text for each result
+"""
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
