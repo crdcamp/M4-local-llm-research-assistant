@@ -1,18 +1,15 @@
+from markdownify import STRIP
 from mcp.server import FastMCP
 from llama_cpp import Llama
 from pydantic import BaseModel
 import json
 from ddgs import DDGS
+import requests
+from bs4 import BeautifulSoup
 
-"""
-FOR LATER:
-    Might want to add a tool that verifies how recent the information is.
-    Could increase reliability?
+# NOTE
+# llama_context: n_ctx_seq (512) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
 
-    NEED TO ADD CONDITION TO IGNORE YOUTUBE LINKS IN `get_search_query_links`
-"""
-
-# Start MCP server
 mcp = FastMCP("Research Assistant")
 
 # LOOK INTO PROPERLY LOADING THE MODEL:
@@ -64,11 +61,39 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
     return query_url_dict
 
-#@mcp.tool()
-#def convert_html_to_markdown(query_url_dict: dict) -> dict:
+# THIS ALMOST CERTAINLY NEEDS SOME CLEANUP (AI slop)
+@mcp.tool()
+def convert_html_to_markdown(query_url_dict: dict) -> dict:
+    HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
+
+    STRIP_TAGS = ['script', 'style', 'nav', 'header', 'footer', 'aside',
+                  'noscript', 'iframe', 'form', 'button', 'svg', 'figure',
+                  'advertisement', 'cookie-banner']
+
+    results = {}
+
+    for query, urls in query_url_dict.items():
+        results[query] = {}
+        for url in urls:
+            try:
+                r = requests.get(url, headers=HEADERS, timeout=7)  # ← requests, not request
+
+                soup = BeautifulSoup(r.text, 'html.parser')
+                for tag in soup(STRIP_TAGS):
+                    tag.decompose()
+
+                main = soup.find('main') or soup.find('article') or soup.find(id='content') or soup.find(class_='content') or soup.body
+                clean_html = str(main) if main else str(soup)
+
+                results[query][url] = md(clean_html, strip=['a', 'img'])
+
+            except Exception as e:
+                print(f"Error fetching {url}: {e}")
+
+    return results
 
 """
-Then add another tool here that uses the LLM to strip out the unneeded text for each result
+Then, add another tool here that uses the LLM to strip out the unneeded text for each result
 """
 
 if __name__ == "__main__":
