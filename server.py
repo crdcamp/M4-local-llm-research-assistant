@@ -1,4 +1,3 @@
-from markdownify import STRIP
 from mcp.server import FastMCP
 from llama_cpp import Llama
 from pydantic import BaseModel
@@ -6,6 +5,7 @@ import json
 from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
+from markdownify import markdownify as md
 
 # NOTE
 # llama_context: n_ctx_seq (512) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
