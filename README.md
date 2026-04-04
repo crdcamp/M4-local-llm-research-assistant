@@ -2,9 +2,11 @@
 
 I primarily use AI for gathering information and speeding up the process of using a search engine. I believe it's up to the user to actually investigate the provided material, as I've had an LLM tell me the wrong info way too many times.
 
-I don't like paying for AI subscriptions either (well... who does?), since now that I've gained enough understanding of coding to the point where I don't need all the tokens that a paid plan provides.
+I don't like paying for AI subscriptions either (well... who does?), since now I have enough technical knowledge to not need all the tokens that a paid plan provides.
 
 **So, this is kind of what lead me to this project:** The goal is to create a local LLM with enough provided tools to act as a "research assistant" (even though I'm not a huge fan of that phrase). The intention is to have a model that runs well locally on a Macbook M4 chip (the base 16 gig model). It will be used strictly for gathering information together, give a general idea of the provided info, and provide links to the information it gathered.
+
+I might also look into implementing some code capabilities, but that is a problem for later.
 
 To summarize, I'm trying to create an extremely scaled down version of [Perplexity](https://www.perplexity.ai/) that runs locally with low hardware requirements.
 
@@ -34,7 +36,8 @@ Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options
 - [x] Generate 5 internet search queries to execute for input prompt
 - [x] From these 5 internet search queries, retrieve the top 4 URLs
 - [ ] Retrieve the HTML content from each URL and convert to markdown
-- [ ] Have LLM interpret the markdown results and provide links for each summary (might need to add additional steps for this one)
+- [ ] Have LLM interpret the markdown results and provide links for each summary (might need to add additional steps for this one. This integration will be started in the `testing` directory)
+- [ ] Use [Sampling](https://huggingface.co/learn/mcp-course/unit1/capabilities#sampling) to define steps taken to conduct research
 - [ ] Use the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) to properly handle Client/Server interaction
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
@@ -52,7 +55,7 @@ If the local LLMs can't generate good google searches, then we might have to loo
 * **Client:** A component within the host application that manages communication with a specific MCP Server. Each Client maintains a 1:1 connection with a single Server, handling the protocol-level details of MCP communication and acting as an intermediary between the Host’s logic and the external Server.
 * **Server:** An external program or service that exposes capabilities (Tools, Resources, Prompts) via the MCP protocol.
 
-## Getting Started with [`uv`](https://github.com/astral-sh/uv)
+## Getting Started with [uv](https://github.com/astral-sh/uv)
 
 ```terminal
 uv venv
@@ -66,7 +69,7 @@ uv pip install "mcp[cli]" llama-cpp-python
 mcp dev server.py
 ```
 
-## Installing `requirements.txt` with `uv`
+## Installing requirements.txt with [uv](https://github.com/astral-sh/uv)
 
 To [import dependencies from `requirements.txt` file:](*https://docs.astral.sh/uv/concepts/projects/dependencies/#importing-dependencies-from-requirements-files)
 
@@ -103,3 +106,65 @@ SDKs handle the low-level protocol details. More specifically, SDKs handle:
 * Message serialization/deserialization
 * Connection management
 * Error handling
+
+## [mcp.json Structure](https://huggingface.co/learn/mcp-course/unit1/mcp-clients#mcpjson-structure)
+
+The standard configuration file for MCP is named `mcp.json`. Here's the basic structure:
+
+```json
+{
+  "servers": [
+    {
+      "name": "Server Name",
+      "transport": {
+        "type": "stdio|sse",
+        // Transport-specific configuration
+      }
+    }
+  ]
+}
+```
+
+This example registers a single server with a name and a transport type. The transport type is either `stdio` or `sse`.
+
+### Configuration for stdio Transport
+
+Using stdio is all we care about for the purposes of this project.
+
+For local servers using stdio transport, the configuration includes the command and arguments to launch the server process:
+
+```json
+{
+  "servers": [
+    {
+      "name": "File Explorer",
+      "transport": {
+        "type": "stdio",
+        "command": "python",
+        "args": ["/path/to/file_explorer_server.py"]
+      }
+    }
+  ]
+}
+```
+
+Here, we have a server called "File Explorer" that is a local script.
+
+## [Local Server Configuration Example](https://huggingface.co/learn/mcp-course/unit1/mcp-clients#scenario-1-local-server-configuration)
+
+In this scenario, we have a local server that is a Python script which could be a file explorer or a code editor.
+
+```json
+{
+  "servers": [
+    {
+      "name": "File Explorer",
+      "transport": {
+        "type": "stdio",
+        "command": "python",
+        "args": ["/path/to/file_explorer_server.py"] // This is an example, we'll use a real server in the next unit
+      }
+    }
+  ]
+}
+```
