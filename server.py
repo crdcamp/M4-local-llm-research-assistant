@@ -1,3 +1,5 @@
+# %% Imports
+from doctest import testfile
 from mcp.server import FastMCP
 from llama_cpp import Llama
 from pydantic import BaseModel
@@ -10,6 +12,7 @@ from markdownify import markdownify as md
 # NOTE
 # llama_context: n_ctx_seq (512) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
 
+# %% Load Model
 mcp = FastMCP("Research Assistant")
 
 # LOOK INTO PROPERLY LOADING THE MODEL:
@@ -22,11 +25,12 @@ model = Llama(
     chat_format="chatml"
 )
 
+
+# %% Functions
 # Structured list output for `generate_search_queries`
 class SearchQueries(BaseModel):
     queries: list[str]
 
-@mcp.tool()
 def generate_search_queries(user_prompt: str) -> list[str]:
     """Generate five targeted search engine queries to research a given topic or question."""
 
@@ -52,7 +56,6 @@ def generate_search_queries(user_prompt: str) -> list[str]:
 
     return parsed["queries"]
 
-@mcp.tool()
 def get_search_query_links(search_queries: list[str]) -> dict:
     """Takes a list of search queries and returns a dict mapping each query to a list of up to 4 result URLs."""
     query_url_dict = {}
@@ -61,8 +64,20 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
     return query_url_dict
 
+# %% Testing
+#@mcp.tool()
+def research_tool(prompt: str):
+    search_queries_list = generate_search_queries(prompt)
+    search_queries_dict = get_search_query_links(search_queries_list)
+
+    return search_queries_dict
+
+test = research_tool("Tell me the various ways to create an LLM from scratch")
+for query, urls in test.items():
+    print(f"QUERY: {query}\nURLs:\n{urls}\n\n")
+
+# %% Cutoff
 # THIS ALMOST CERTAINLY NEEDS SOME CLEANUP (AI slop)
-@mcp.tool()
 def convert_html_to_markdown(query_url_dict: dict) -> dict:
     HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
 
