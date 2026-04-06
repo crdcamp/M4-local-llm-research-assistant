@@ -39,9 +39,42 @@ Finally, [llama.cpp](https://github.com/ggml-org/llama.cpp) has a lot of options
 - [ ] Have the LLM summarize the markdown results and provide links for each summary (might need to add additional steps for this one)
 - [ ] Test initial project structure using the [llama.cpp web UI](https://github.com/ggml-org/llama.cpp/discussions/16938)
 - [ ] Clean up project dependencies
-- [ ] Use the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) to properly handle Client/Server interaction (for properly loading and unloading model based on where you are in the workflow) - Could save a lot of ram if this is done right
 
 If the local LLMs can't generate good google searches, then we might have to look into training them with the Claude API. Before then, we'll just get this general workflow working and fine tune everything after the initial structure is ready.
+
+# Ideas for Future Improvement
+
+The above text describes a sort of skeleton for this project. In order to ensure that we're not getting garbage data for the LLM to interpret and get confused over, we'll have to take everything a step further.
+
+## Architectural Improvements
+
+As of now, there is a complete absence of the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) to properly load the model rather than the currently clumsy option of simply loading the model at the top of [server.py](https://github.com/crdcamp/M4-local-llm-research-assistant/blob/main/server.py).
+
+We want to do this right, and using async and stuff like that would be a great way to make things run just a little bit more smoothly.
+
+As of writing, I have limited knowledge on what exactly the SDK is used for. So, this section might change when I get to this step.
+
+## Ensuring "Good" Data
+
+Probably the most irritating part of this project is needing to revisit the [requests](https://pypi.org/project/requests/) and [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) libraries (it's been some time since I've used them and I have limited HTML knowledge).
+
+I have to do some research and testing in order to figure out how to strip out everything that isn't semantic information (the current code for this is mostly AI slop that I haven't reviewed carefully). We want to give this stupid, dumb, tiny little LLM the most precise information possible. Otherwise, it will undoubtedly fail in probably funny ways (one time it just spat out mandarin characters for me).
+
+**Here's what we gotta do:**
+
+- [ ] HTML to markdown conversion in function `convert_html_to_markdown()`: Need to do a deep dive into HTML tags to ensure we're only getting semantic data
+- [ ] Block sites that contain confusing information for the model, such as YouTube and GitHub
+- [ ] Skip websites that require an "are you human?" input
+
+## Memory Usage Improvements
+
+This section will be for things like finding the right contexts lengths and doing a deep dive into making the model interact with the hardware as efficiently as possible.
+
+As of writing this, I honestly have no idea where to start here. This might be another project entirely by the time I get to this step.
+
+So, I'll just leave this here for now. Messing with the code/hardware interaction might even be completely unnecessary due to Apple's Metal backend that llama.cpp uses.
+
+However, doing a deep dive into everything involved with context length is definitely not going to be optional.
 
 # Some Notes for Me
 
