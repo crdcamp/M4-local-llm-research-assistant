@@ -14,6 +14,7 @@ NOTES
 * Warning when loading model: llama_context: n_ctx_seq (512) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
 * Function descriptions could use a lot more work
 * Look into properly loading the model: https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#core-concepts
+    * When looking at Activity Monitor, it looks like the model might be loaded twice!
 
 """
 
@@ -94,14 +95,39 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
 
     return md_results
 
+def interpret_md_results(markdown_results: dict) -> str:
+    # We'll just start by accessing one entry.
+    # Keep it simple for testing for now
+
+    for query, url_dict in markdown_results.items():
+        first_url = next(iter(url_dict))
+        content = url_dict[first_url]
+
+        response = model.create_chat_completion(
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a research assistant. Summarize the following web page content clearly and concisely, focusing on the most relevant facts and key points. Ignore navigation text, ads, or other boilerplate."
+                },
+                {
+                    "role": "user",
+                    "content": content
+                }
+            ]
+        )
+
+        return response["choices"][0]["message"]["content"]
+
+
 @mcp.tool()
 def research_tool(prompt: str) -> dict:
     """Search the web and return page content as markdown for a given research prompt."""
     search_queries_list = generate_search_queries(prompt)
     search_queries_dict = get_search_query_links(search_queries_list)
     url_md_results = convert_html_to_markdown(search_queries_dict)
+    chat_response = interpret_md_results(url_md_results)
 
-    return url_md_results
+    return chat_response
 
 """
 Then, add another tool here that uses the LLM to strip out the unneeded text for each result...
