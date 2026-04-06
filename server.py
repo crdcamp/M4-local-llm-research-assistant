@@ -64,14 +64,37 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
     return query_url_dict
 
+# %% Testing conversion function
 # Rewrite conversion function here
-def convert_html_to_markdown(query_dict: dict):
+def convert_html_to_markdown(query_url_dict: dict) -> dict:
     """
     `query_dict` structure:
         key: Internet search query
         value: List of URLS provided by search query
     """
 
+    HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
+
+    STRIP_TAGS = ['script', 'style', 'nav', 'header', 'footer', 'aside',
+                    'noscript', 'iframe', 'form', 'button', 'svg', 'figure',
+                    'advertisement', 'cookie-banner']
+
+    md_results = {}
+
+    for query, urls in query_url_dict.items():
+        md_results[query] = {}
+        for url in urls:
+            md_results[query][url] = "A bunch of markdown text"
+
+    return md_results
+
+test_search_queries = generate_search_queries("Tell me about the difference between endogenous and exogenous variables")
+test_urls_dict = get_search_query_links(test_search_queries)
+
+# %% Conversion Test
+import pprint
+conversion_test = convert_html_to_markdown(test_urls_dict)
+pprint.pprint(conversion_test)
 
 # %% Testing/Refacotring
 #@mcp.tool()
