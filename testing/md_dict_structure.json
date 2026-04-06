@@ -1,0 +1,16 @@
+{
+  "query": {
+    "http://blahblahblah1": {
+      "md_result": "A bunch of markdown text"
+    },
+    "http://blahblahblah2": {
+      "md_result": "A bunch of markdown text"
+    },
+    "http://blahblahblah3": {
+      "md_result": "A bunch of markdown text"
+    },
+    "http://blahblahblah4": {
+      "md_result": "A bunch of markdown text"
+    }
+  }
+}

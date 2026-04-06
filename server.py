@@ -57,14 +57,23 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     return parsed["queries"]
 
 def get_search_query_links(search_queries: list[str]) -> dict:
-    """Takes a list of search queries and returns a dict mapping each query to a list of up to 4 result URLs."""
+    """Takes a list of search queries and returns a dict mapping each query to a list of URLs resulting from the search query."""
     query_url_dict = {}
     for query in search_queries:
         query_url_dict[query] = [r["href"] for r in DDGS().text(query, max_results=4)]
 
     return query_url_dict
 
-# %% Testing
+# Rewrite conversion function here
+def convert_html_to_markdown(query_dict: dict):
+    """
+    `query_dict` structure:
+        key: Internet search query
+        value: List of URLS provided by search query
+    """
+
+
+# %% Testing/Refacotring
 #@mcp.tool()
 def research_tool(prompt: str):
     search_queries_list = generate_search_queries(prompt)
