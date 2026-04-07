@@ -56,6 +56,7 @@ I have to do some research and testing in order to figure out how to strip out e
 
 - [ ] HTML to markdown conversion in function `convert_html_to_markdown()`: Need to do a deep dive into HTML tags to ensure we're only getting semantic data
 - [ ] Block sites that contain confusing information for the model, such as YouTube and GitHub
+- [ ] Add temporary fix that ignore sites that exceed the context length limit (maybe increase the number of sites visited to offset this)
 - [ ] Skip websites that require an "are you human?" input
 
 ## Architectural Improvements
