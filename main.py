@@ -1,4 +1,4 @@
-from mcp.server import FastMCP
+from fastapi import FastAPI, WebSocket
 from llama_cpp import Llama
 from pydantic import BaseModel
 import json
@@ -6,6 +6,7 @@ from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
+from starlette.responses import HTMLResponse
 
 """
 NOTES
@@ -15,7 +16,7 @@ NOTES
     * When looking at Activity Monitor, it looks like the model might be loaded twice
 """
 
-mcp = FastMCP("Research Assistant")
+app = FastAPI()
 
 html = """
 <!doctype html>
@@ -275,6 +276,10 @@ html = """
     </body>
 </html>
 """
+
+@app.get("/")
+async def get()
+    return HTMLResponse(html)
 
 print("Loading model...")
 model = Llama(
