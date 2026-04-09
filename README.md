@@ -112,73 +112,12 @@ uv add -r requirements.txt
 
 See the [pip migration guide](https://docs.astral.sh/uv/guides/migration/pip-to-project/#importing-requirements-files) for more details.
 
-## [SDK Overview](https://huggingface.co/learn/mcp-course/unit1/sdk#sdk-overview)
+## FastAPI
 
-SDKs handle the low-level protocol details. More specifically, SDKs handle:
-* Protocol-level communication
-* Capability registration and discovery
-* Message serialization/deserialization
-* Connection management
-* Error handling
+To run FastAPI dev server:
 
-## [mcp.json Structure](https://huggingface.co/learn/mcp-course/unit1/mcp-clients#mcpjson-structure)
-
-The standard configuration file for MCP is named `mcp.json`. Here's the basic structure:
-
-```json
-{
-  "servers": [
-    {
-      "name": "Server Name",
-      "transport": {
-        "type": "stdio|sse",
-        // Transport-specific configuration
-      }
-    }
-  ]
-}
+```terminal
+fastapi dev main.py
 ```
 
-This example registers a single server with a name and a transport type. The transport type is either `stdio` or `sse`.
-
-### Configuration for stdio Transport
-
-Using stdio is all we care about for the purposes of this project.
-
-For local servers using stdio transport, the configuration includes the command and arguments to launch the server process:
-
-```json
-{
-  "servers": [
-    {
-      "name": "File Explorer",
-      "transport": {
-        "type": "stdio",
-        "command": "python",
-        "args": ["/path/to/file_explorer_server.py"]
-      }
-    }
-  ]
-}
-```
-
-Here, we have a server called "File Explorer" that is a local script.
-
-## [Local Server Configuration Example](https://huggingface.co/learn/mcp-course/unit1/mcp-clients#scenario-1-local-server-configuration)
-
-In this scenario, we have a local server that is a Python script which could be a file explorer or a code editor.
-
-```json
-{
-  "servers": [
-    {
-      "name": "File Explorer",
-      "transport": {
-        "type": "stdio",
-        "command": "python",
-        "args": ["/path/to/file_explorer_server.py"] // This is an example, we'll use a real server in the next unit
-      }
-    }
-  ]
-}
-```
+Also, here's a resource for [FastAPI WebSockets](https://fastapi.tiangolo.com/advanced/websockets/#create-a-websocket).
