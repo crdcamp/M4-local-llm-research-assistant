@@ -10,9 +10,10 @@ I might also look into implementing some code capabilities, but that is a proble
 
 To summarize, I'm trying to create an extremely scaled down version of [Perplexity](https://www.perplexity.ai/) that runs locally with low hardware requirements.
 
-# The Model I'm Using
+# The Model I'm Testing
 
 * [bartowski/Qwen2.5-7B-Instruct-Q4_K_M.gguf](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/blob/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf) (A Qwen model quantized down to 4 bits)
+* [unsloth/gemma-4-26B-A4B-it-GGUF](A Gemma model quantized down to 3 bits)
 
 # The Process
 
