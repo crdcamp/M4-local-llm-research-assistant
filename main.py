@@ -347,6 +347,7 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
 
     for query, urls in query_url_dict.items():
         md_results[query] = {}
+
         for url in urls:
             try:
                 r = requests.get(url, headers=HEADERS, timeout=7)
@@ -395,8 +396,3 @@ def research_tool(prompt: str) -> dict:
     chat_response = interpret_md_results(url_md_results)
 
     return chat_response
-
-"""
-Then, add another tool here that uses the LLM to strip out the unneeded text for each result...
-Or something like that...
-"""
