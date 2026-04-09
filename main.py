@@ -218,7 +218,7 @@ html = """
             const sendButton = document.getElementById("send-button");
 
             // Note: Replace with your actual FastAPI WebSocket endpoint
-            // const socket = new WebSocket(`ws://${window.location.host}/ws`);
+            const socket = new WebSocket(`ws://${window.location.host}/ws`);
 
             function appendMessage(text, role) {
                 const wrapper = document.createElement("div");
@@ -245,7 +245,7 @@ html = """
                 const message = messageInput.value.trim();
                 if (message) {
                     appendMessage(message, "user");
-                    // socket.send(message); // WebSocket execution
+                    socket.send(message); // WebSocket execution
                     messageInput.value = "";
                     messageInput.style.height = "auto";
                 }
@@ -267,19 +267,26 @@ html = """
             });
 
             // WebSocket Event Listeners Example
-            /*
         socket.onmessage = function(event) {
             appendMessage(event.data, 'ai');
         };
-        */
+
         </script>
     </body>
 </html>
 """
 
 @app.get("/")
-async def get()
+async def get():
     return HTMLResponse(html)
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        result = research_tool(data)
+        await websocket.send_text(result)
 
 print("Loading model...")
 model = Llama(
@@ -380,8 +387,6 @@ def interpret_md_results(markdown_results: dict) -> str:
 
         return response["choices"][0]["message"]["content"]
 
-
-@mcp.tool()
 def research_tool(prompt: str) -> dict:
     """Search the web and return page content as markdown for a given research prompt."""
     search_queries_list = generate_search_queries(prompt)
@@ -395,6 +400,3 @@ def research_tool(prompt: str) -> dict:
 Then, add another tool here that uses the LLM to strip out the unneeded text for each result...
 Or something like that...
 """
-
-if __name__ == "__main__":
-    mcp.run(transport="stdio")
