@@ -291,7 +291,7 @@ async def websocket_endpoint(websocket: WebSocket):
 print("Loading model...")
 model = Llama(
     model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
-    n_ctx = 2048,
+    n_ctx = 32768,
     max_tokens=2048,
     verbose=False,
     chat_format="chatml"
