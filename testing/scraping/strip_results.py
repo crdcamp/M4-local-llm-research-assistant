@@ -1,3 +1,4 @@
+# %% Imports
 from llama_cpp import Llama
 import json
 from ddgs import DDGS
@@ -8,14 +9,14 @@ from markdownify import markdownify as md
 # %% Load Model
 print("Loading model...")
 model = Llama(
-    model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+    model_path="../../models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
     n_ctx = 32768,
     max_tokens=2048,
     verbose=False,
     chat_format="chatml"
 )
 
-# %% Get links function
+# %% Functions
 def get_search_query_links(search_queries: list[str]) -> dict:
     """Takes a list of search queries and returns a dict mapping each query to a list of URLs resulting from the search query."""
     query_url_dict = {}
@@ -24,8 +25,6 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
     return query_url_dict
 
-
-# %% Convert html to markdown function
 def convert_html_to_markdown(query_url_dict: dict) -> dict:
     """Retrieves HTML content from a given URL, strips the HTML content, and converts to markdown"""
     HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
@@ -56,4 +55,7 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
 
     return md_results
 
+# %% Testing
 example_search_prompts_endo_vs_exo = ['definition of endogenous variables in statistics', 'exogenous variables in statistical models', 'difference between endogenous and exogenous variables', 'examples of endogenous and exogenous variables in statistics', 'endogenous vs exogenous variables explained']
+search_links_endo_vs_exo = get_search_query_links(example_search_prompts_endo_vs_exo)
+print(search_links_endo_vs_exo)
