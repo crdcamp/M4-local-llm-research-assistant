@@ -11,7 +11,6 @@ print("Loading model...")
 model = Llama(
     model_path="../../models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
     n_ctx = 32768,
-    max_tokens=2048,
     verbose=False,
     chat_format="chatml"
 )
@@ -55,7 +54,20 @@ def convert_html_to_markdown(query_url_dict: dict) -> dict:
 
     return md_results
 
-# %% Testing
+# %% Testing variables
 example_search_prompts_endo_vs_exo = ['definition of endogenous variables in statistics', 'exogenous variables in statistical models', 'difference between endogenous and exogenous variables', 'examples of endogenous and exogenous variables in statistics', 'endogenous vs exogenous variables explained']
 search_links_endo_vs_exo = get_search_query_links(example_search_prompts_endo_vs_exo)
 print(search_links_endo_vs_exo)
+
+# %% Inspecting
+
+for key, value in search_links_endo_vs_exo.items():
+    print(f"{key}\n{value}\n\n")
+
+
+"""
+NEXT STEPS
+
+Use llama.cpp's `tokenize()` method to calculate token usage
+of a given web page
+"""
