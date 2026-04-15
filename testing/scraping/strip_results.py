@@ -28,12 +28,8 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
 # %% Testing variables
 example_search_prompts_endo_vs_exo = ['definition of endogenous variables in statistics', 'exogenous variables in statistical models', 'difference between endogenous and exogenous variables', 'examples of endogenous and exogenous variables in statistics', 'endogenous vs exogenous variables explained']
+print("Getting search links...")
 search_links_endo_vs_exo = get_search_query_links(example_search_prompts_endo_vs_exo)
-
-
-# %% Inspecting
-for key, value in search_links_endo_vs_exo.items():
-    print(f"{key}\n{value}\n\n")
 
 
 """
@@ -41,25 +37,6 @@ NEXT STEPS
 
 Use llama.cpp's `tokenize()` method to calculate token usage
 of a given web page
-
-Here's the outline for the functions so far:
-
-def generate_search_queries():
-def get_search_query_links():
-def retrieve_html():
-def calculate_token_usage():
-def convert_html():
-"""
-
-# %% Testing new HTML retrieval function
-# For extracting relevant text from HTML
-
-"""
-We'll start by just getting the HTML first, then we'll create another
-function that extracts the relevant tags.
-
-After both of these functions are solid, we'll combine them into one
-function
 """
 
 #html_results[query][url] = r.text
@@ -86,6 +63,7 @@ def get_html_text(query_url_dict):
 
     return html_results
 
+print("Retrieving html text...")
 html_results = get_html_text(search_links_endo_vs_exo)
 
 # %% Save
@@ -117,6 +95,7 @@ def interpret_md_results(html_results: dict) -> dict:
 
     return summaries
 
+print("Interpreting results...")
 results = interpret_md_results(html_results)
 for query, summary in results.items():
     print(f"Query: {query}\nSummary: {summary}\n\n")
