@@ -90,11 +90,8 @@ def extract_text_from_html(html_dict):
             soup = BeautifulSoup(html_text, "html.parser")
             paragraphs = soup.find_all("p")
 
-            for p in paragraphs:
-                text = p.get_text(strip=True)
 
-    return text
+    return paragraphs
 
 
-test = extract_text_from_html(html_results)
-print(test)
+extract_text_from_html(html_results)
