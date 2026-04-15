@@ -88,10 +88,11 @@ def extract_text_from_html(html_dict):
 
         for url, html_text in urls.items():
             soup = BeautifulSoup(html_text, "html.parser")
-            paragraphs = soup.find_all("p")
+            paragraphs = soup.find_all('p')
 
 
     return paragraphs
 
 
-extract_text_from_html(html_results)
+test = extract_text_from_html(html_results)
+print(test)
