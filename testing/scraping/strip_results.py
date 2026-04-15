@@ -55,8 +55,8 @@ def get_html_text(query_url_dict):
                 paragraphs = soup.find_all('p')
                 html_results[query][url] = [p.get_text() for p in paragraphs]
 
-                if html_results[query][url] == []:
-                    del html_results[query][url]
+                if not html_results[query]:
+                    del html_results[query]
 
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
