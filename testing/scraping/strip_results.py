@@ -3,8 +3,7 @@ from llama_cpp import Llama
 from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
-from markdownify import markdownify as md
-
+import json
 # For later: managing token usage
 max_tokens = 32768
 
@@ -79,6 +78,9 @@ def get_html_text(query_url_dict):
                 paragraphs = soup.find_all('p')
                 html_results[query][url] = [p.get_text() for p in paragraphs]
 
+                if html_results[query][url] == []:
+                    del html_results[query][url]
+
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
 
@@ -86,6 +88,35 @@ def get_html_text(query_url_dict):
 
 html_results = get_html_text(search_links_endo_vs_exo)
 
-# %%
+# %% Save
 with open("html_results.json", "w") as f:
     json.dump(html_results, f, indent=4)
+
+# %% Interpretation test
+def interpret_md_results(html_results: dict) -> dict:
+    summaries = {}
+
+    for query, url_dict in html_results.items():
+        first_url = next(iter(url_dict))
+        content = "\n\n".join(url_dict[first_url])  # join list of paragraphs into one string
+
+        response = model.create_chat_completion(
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a research assistant. Summarize the following web page content clearly and concisely, focusing on the most relevant facts and key points. Ignore navigation text, ads, or other boilerplate. If the result indicates the search was blocked (example: 'This website is using a security service'), ignore the result"
+                },
+                {
+                    "role": "user",
+                    "content": content
+                }
+            ]
+        )
+
+        summaries[query] = response["choices"][0]["message"]["content"]
+
+    return summaries
+
+results = interpret_md_results(html_results)
+for query, summary in results.items():
+    print(f"Query: {query}\nSummary: {summary}\n\n")

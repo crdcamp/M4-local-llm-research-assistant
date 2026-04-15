@@ -1,11 +1,8 @@
 {
     "definition of endogenous variables in statistics": {
-        "https://en.wikipedia.org/wiki/Exogenous_and_endogenous_variables": [],
-        "https://en.wikipedia.org/wiki/Endogeneity_(econometrics)": [],
         "https://www.investopedia.com/terms/e/endogenous-variable.asp": [
             "Julie Bang / Investopedia",
             "An endogenous variable is a component within a model whose value is influenced by interactions within the system it is part of.",
-            "Get personalized, AI-powered answers built on 27+ years of trusted expertise.",
             " An endogenous variable is one whose value is influenced or determined by other variables within the same statistical model. In other words, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Endogenous variables are the opposite of exogenous variables, which are independent variables or outside forces.\n",
             " Endogenous variables are important in econometrics and economic modeling because they show whether a variable causes a particular effect. Economists employ causal modeling to explain outcomes by analyzing dependent variables based on a variety of factors. For example, in a model studying supply and demand, the price of a good is an endogenous factor because the price can be changed by the producer (supplier) in response to consumer demand.\n",
             " Economists also include independent variables to help determine to which extent a result can be attributed to an exogenous or endogenous cause. Endogenous variables have values that shift as part of a functional relationship between other variables within the model. The relationship is also referred to as dependent and is seen as predictable in nature.\n",
@@ -18,19 +15,17 @@
             "Agriculture and meteorology are among the other fields that use models with endogenous variables.",
             "Unlike endogenous variables, exogenous variables are considered independent. One variable within the formula doesn\u2019t dictate or directly correlate to a change in another.",
             " An endogenous variable is a variable in a statistical model. It\u2019s changed or determined by its relationship with other variables within the model.\n",
-            " To put it another way, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Therefore, its values may be determined by other variables.\n",
-            "Get personalized, AI-powered answers built on 27+ years of trusted expertise."
+            " To put it another way, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Therefore, its values may be determined by other variables.\n"
         ],
         "http://www-personal.umd.umich.edu/~delittle/Encyclopedia+entries/Endogenous+variable.htm": [
             "The requested URL was not found on this server."
         ]
     },
     "exogenous variables in statistical models": {
-        "https://en.wikipedia.org/wiki/Exogenous_and_endogenous_variables": [],
         "https://www.statisticshowto.com/endogenous-variable/": [
             "This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.",
             "You can email the site owner to let them know you were blocked. Please include what you were doing when this page came up and the Cloudflare Ray ID found at the bottom of this page.",
-            "\nCloudflare Ray ID: 9ec78615bd744828\n\u2022\n\n        Your IP:\n        Click to reveal\n47.45.146.111\n\u2022\n\nPerformance & security by Cloudflare\n"
+            "\nCloudflare Ray ID: 9ec78f8e9ac401b4\n\u2022\n\n        Your IP:\n        Click to reveal\n47.45.146.111\n\u2022\n\nPerformance & security by Cloudflare\n"
         ],
         "https://spotintelligence.com/2023/04/19/endogenous-exogenous/": [
             "Online Tool To Extract Text From PDFs & Images",
@@ -130,8 +125,7 @@
             "* Unsubscribe to our weekly newsletter at any time. We comply with GDPR and do not share your data.",
             "By subscribing you agree to our terms & conditions.",
             " "
-        ],
-        "https://www.quora.com/What-are-exogenous-and-endogenous-variables-in-regression": []
+        ]
     },
     "difference between endogenous and exogenous variables": {
         "https://financehw.com/what-is-the-difference-between-exogenous-and-endogenous-variables-in-econometrics": [
@@ -150,13 +144,9 @@
         "https://www.indeed.com/career-advice/career-development/exogenous-variable": [
             "Your request has been blocked.",
             "Return home"
-        ],
-        "https://www.askdifference.com/endogenous-vs-exogenous/": [],
-        "https://www.statology.org/endogenous-vs-exogenous-variables/": []
+        ]
     },
     "examples of endogenous and exogenous variables in statistics": {
-        "https://en.wikipedia.org/wiki/Exogenous_and_endogenous_variables": [],
-        "https://www.statology.org/endogenous-vs-exogenous-variables/": [],
         "https://statistics.arabpsychology.com/endogenous-vs-exogenous-variables-definition-examples/": [
             "causality, Data Analysis, Econometrics, endogenous variables, exogenous variables, Regression Analysis, Research methods, statistical modeling, structural models, variable types",
             "\nIn the complex field of statistical modeling and econometrics, accurately interpreting the relationships between factors hinges on classifying the variables utilized. The rigorous classification of variables into either endogenous or exogenous categories is not a mere academic exercise; it is fundamental to constructing accurate regression models, correctly assessing causality, and avoiding serious statistical pitfalls. Misidentifying a variable\u2019s true nature can lead directly to issues like biased estimators, rendering the resulting analysis unreliable for policy decisions or scientific conclusions.",
@@ -196,11 +186,10 @@
         "https://www.statisticshowto.com/endogenous-variable/": [
             "This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.",
             "You can email the site owner to let them know you were blocked. Please include what you were doing when this page came up and the Cloudflare Ray ID found at the bottom of this page.",
-            "\nCloudflare Ray ID: 9ec78637d92a5195\n\u2022\n\n        Your IP:\n        Click to reveal\n47.45.146.111\n\u2022\n\nPerformance & security by Cloudflare\n"
+            "\nCloudflare Ray ID: 9ec78fa51d32b9e0\n\u2022\n\n        Your IP:\n        Click to reveal\n47.45.146.111\n\u2022\n\nPerformance & security by Cloudflare\n"
         ]
     },
     "endogenous vs exogenous variables explained": {
-        "https://www.statology.org/endogenous-vs-exogenous-variables/": [],
         "https://timeseriesreasoning.com/contents/exogenous-and-endogenous-variables/": [
             "Statistical Modeling and Forecasting",
             "Learn statistics, one story at a time. With tutorials in Python",
@@ -282,7 +271,6 @@
         "https://www.investopedia.com/terms/e/endogenous-variable.asp": [
             "Julie Bang / Investopedia",
             "An endogenous variable is a component within a model whose value is influenced by interactions within the system it is part of.",
-            "Get personalized, AI-powered answers built on 27+ years of trusted expertise.",
             " An endogenous variable is one whose value is influenced or determined by other variables within the same statistical model. In other words, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Endogenous variables are the opposite of exogenous variables, which are independent variables or outside forces.\n",
             " Endogenous variables are important in econometrics and economic modeling because they show whether a variable causes a particular effect. Economists employ causal modeling to explain outcomes by analyzing dependent variables based on a variety of factors. For example, in a model studying supply and demand, the price of a good is an endogenous factor because the price can be changed by the producer (supplier) in response to consumer demand.\n",
             " Economists also include independent variables to help determine to which extent a result can be attributed to an exogenous or endogenous cause. Endogenous variables have values that shift as part of a functional relationship between other variables within the model. The relationship is also referred to as dependent and is seen as predictable in nature.\n",
@@ -295,8 +283,7 @@
             "Agriculture and meteorology are among the other fields that use models with endogenous variables.",
             "Unlike endogenous variables, exogenous variables are considered independent. One variable within the formula doesn\u2019t dictate or directly correlate to a change in another.",
             " An endogenous variable is a variable in a statistical model. It\u2019s changed or determined by its relationship with other variables within the model.\n",
-            " To put it another way, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Therefore, its values may be determined by other variables.\n",
-            "Get personalized, AI-powered answers built on 27+ years of trusted expertise."
+            " To put it another way, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Therefore, its values may be determined by other variables.\n"
         ],
         "https://statistics.arabpsychology.com/endogenous-vs-exogenous-variables-definition-examples/": [
             "causality, Data Analysis, Econometrics, endogenous variables, exogenous variables, Regression Analysis, Research methods, statistical modeling, structural models, variable types",
