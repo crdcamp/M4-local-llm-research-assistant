@@ -70,6 +70,10 @@ html_results = get_html_text(search_links_endo_vs_exo)
 with open("html_results.json", "w") as f:
     json.dump(html_results, f, indent=4)
 
+
+"""
+Don't forget to rename this function when tying everything together
+"""
 # %% Interpretation test
 def interpret_md_results(html_results: dict) -> dict:
     summaries = {}
@@ -82,7 +86,7 @@ def interpret_md_results(html_results: dict) -> dict:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a research assistant. Summarize the following web page content clearly and concisely, focusing on the most relevant facts and key points. Ignore navigation text, ads, or other boilerplate. If the result indicates the search was blocked (example: 'This website is using a security service'), ignore the result"
+                    "content": "You are a research assistant. Summarize the following web page content clearly and concisely, focusing on the most relevant facts and key points. Ignore navigation text, ads, or other boilerplate. If the page content appears to be a bot/security challenge, access denial, or CAPTCHA page rather than real content, respond with exactly: BLOCKED"
                 },
                 {
                     "role": "user",
@@ -91,7 +95,9 @@ def interpret_md_results(html_results: dict) -> dict:
             ]
         )
 
-        summaries[query] = response["choices"][0]["message"]["content"]
+        summary = response["choices"][0]["message"]["content"]
+        if summary.strip() != "BLOCKED":
+            summaries[query] = summary
 
     return summaries
 
