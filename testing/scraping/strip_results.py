@@ -1,10 +1,14 @@
 # %% Imports
+from pydoc import html
 from llama_cpp import Llama
-import json
 from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
+import pprint
+
+# For later: managing token usage
+max_tokens = 32768
 
 # %% Load Model
 print("Loading model...")
@@ -14,6 +18,7 @@ model = Llama(
     verbose=False,
     chat_format="chatml"
 )
+print("Model done loading")
 
 # %% Functions
 def get_search_query_links(search_queries: list[str]) -> dict:
@@ -24,43 +29,12 @@ def get_search_query_links(search_queries: list[str]) -> dict:
 
     return query_url_dict
 
-def convert_html_to_markdown(query_url_dict: dict) -> dict:
-    """Retrieves HTML content from a given URL, strips the HTML content, and converts to markdown"""
-    HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
-
-    STRIP_TAGS = ['script', 'style', 'nav', 'header', 'footer', 'aside',
-                    'noscript', 'iframe', 'form', 'button', 'svg', 'figure',
-                    'advertisement', 'cookie-banner']
-
-    md_results = {}
-
-    for query, urls in query_url_dict.items():
-        md_results[query] = {}
-
-        for url in urls:
-            try:
-                r = requests.get(url, headers=HEADERS, timeout=7)
-                soup = BeautifulSoup(r.text, 'html.parser')
-                for tag in soup(STRIP_TAGS):
-                    tag.decompose()
-
-                main = soup.find('main') or soup.find('article') or soup.find(id='content') or soup.find(class_='content') or soup.body
-                clean_html = str(main) if main else str(soup)
-
-                md_results[query][url] = md(clean_html, strip=['a', 'img'])
-
-            except Exception as e:
-                print(f"Error fetching {url}: {e}")
-
-    return md_results
-
 # %% Testing variables
 example_search_prompts_endo_vs_exo = ['definition of endogenous variables in statistics', 'exogenous variables in statistical models', 'difference between endogenous and exogenous variables', 'examples of endogenous and exogenous variables in statistics', 'endogenous vs exogenous variables explained']
 search_links_endo_vs_exo = get_search_query_links(example_search_prompts_endo_vs_exo)
-print(search_links_endo_vs_exo)
+
 
 # %% Inspecting
-
 for key, value in search_links_endo_vs_exo.items():
     print(f"{key}\n{value}\n\n")
 
@@ -70,4 +44,43 @@ NEXT STEPS
 
 Use llama.cpp's `tokenize()` method to calculate token usage
 of a given web page
+
+Here's the outline for the functions so far:
+
+def generate_search_queries():
+def get_search_query_links():
+def retrieve_html():
+def calculate_token_usage():
+def convert_html():
 """
+
+# %% Testing new HTML retrieval function
+# For extracting relevant text from HTML
+
+"""
+We'll start by just getting the HTML first, then we'll create another
+function that extracts the relevant tags.
+
+After both of these functions are solid, we'll combine them into one
+function
+"""
+
+def get_html_text(query_url_dict):
+    html_results = {}
+
+    for query, urls in query_url_dict.items():
+        html_results[query] = {}
+
+        for url in urls:
+            try:
+                r = requests.get(url, timeout=7)
+                html_results[query][url] = r.text
+
+            except Exception as e:
+                print(f"Error fetching {url}: {e}")
+
+    return html_results
+
+html_results = get_html_text(search_links_endo_vs_exo)
+
+# %% Extracting semantic text from HTML
