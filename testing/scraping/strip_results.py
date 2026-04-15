@@ -63,6 +63,8 @@ After both of these functions are solid, we'll combine them into one
 function
 """
 
+#html_results[query][url] = r.text
+
 def get_html_text(query_url_dict):
     html_results = {}
 
@@ -72,7 +74,10 @@ def get_html_text(query_url_dict):
         for url in urls:
             try:
                 r = requests.get(url, timeout=7)
-                html_results[query][url] = r.text
+                soup = BeautifulSoup(r.text, 'html.parser')
+
+                paragraphs = soup.find_all('p')
+                html_results[query][url] = [p.get_text() for p in paragraphs]
 
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
@@ -81,18 +86,6 @@ def get_html_text(query_url_dict):
 
 html_results = get_html_text(search_links_endo_vs_exo)
 
-# %% Extracting semantic text from HTML
-# We'll start by only extracting the `<p>` elements
-def extract_text_from_html(html_dict):
-    for query, urls in html_dict.items():
-
-        for url, html_text in urls.items():
-            soup = BeautifulSoup(html_text, "html.parser")
-            paragraphs = soup.find_all('p')
-
-
-    return paragraphs
-
-
-test = extract_text_from_html(html_results)
-print(test)
+# %%
+with open("html_results.json", "w") as f:
+    json.dump(html_results, f, indent=4)
