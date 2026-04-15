@@ -1,11 +1,9 @@
 # %% Imports
-from pydoc import html
 from llama_cpp import Llama
 from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-import pprint
 
 # For later: managing token usage
 max_tokens = 32768
@@ -87,9 +85,16 @@ html_results = get_html_text(search_links_endo_vs_exo)
 # We'll start by only extracting the `<p>` elements
 def extract_text_from_html(html_dict):
     for query, urls in html_dict.items():
-        print(f"Query: {query}")
+
         for url, html_text in urls.items():
-            print(f"URL: {url}")
-            print(f"HTML length: {len(html_text)}\n\n")
+            soup = BeautifulSoup(html_text, "html.parser")
+            paragraphs = soup.find_all("p")
+
+            for p in paragraphs:
+                text = p.get_text(strip=True)
+
+    return text
+
 
 test = extract_text_from_html(html_results)
+print(test)
