@@ -84,3 +84,12 @@ def get_html_text(query_url_dict):
 html_results = get_html_text(search_links_endo_vs_exo)
 
 # %% Extracting semantic text from HTML
+# We'll start by only extracting the `<p>` elements
+def extract_text_from_html(html_dict):
+    for query, urls in html_dict.items():
+        print(f"Query: {query}")
+        for url, html_text in urls.items():
+            print(f"URL: {url}")
+            print(f"HTML length: {len(html_text)}\n\n")
+
+test = extract_text_from_html(html_results)
