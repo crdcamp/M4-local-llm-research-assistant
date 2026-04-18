@@ -10,10 +10,13 @@ import time
 """
 * ADD DATE/TIME NAMED FILES FOR HTML RESULT AND CHAT OUTPUT
 * ADD TIMER FOR EACH FUNCTION AND ADD RESULT TO OUTPUT
+* Should probably just make a function for timing the functions...
 """
 
 html_results_dir = "test_results/html_results"
 prompt_results_dir = "test_results/prompt_results"
+
+times = []
 
 # FastAPI integration (for later)
 # app = FastAPI()
@@ -42,7 +45,10 @@ model = Llama(
     chat_format="chatml"
 )
 model_load_end_time = time.perf_counter()
-print(f"Model loaded in {model_load_end_time - model_load_start_time} seconds\n")
+
+model_load_total_time = model_load_end_time - model_load_start_time
+print(f"Model loaded in {model_load_total_time} seconds\n")
+times.append(model_load_total_time)
 
 # Structured list output for `generate_search_queries`
 class SearchQueries(BaseModel):
@@ -50,7 +56,6 @@ class SearchQueries(BaseModel):
 
 def generate_search_queries(user_prompt: str) -> list[str]:
     print("Generating search queries...")
-    """Generate five targeted search engine queries to research a given topic or question."""
 
     start_time = time.perf_counter()
     response = model.create_chat_completion(
@@ -73,19 +78,25 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     content = response["choices"][0]["message"]["content"]
     parsed = json.loads(content)
     end_time = time.perf_counter()
-    print(f"Search queries generated in {end_time - start_time} seconds\n")
+
+    total_time = end_time - start_time
+    print(f"Search queries generated in {total_time} seconds\n")
+    times.append(total_time)
 
     return parsed["queries"]
 
 def get_search_query_links(search_queries: list[str]) -> dict:
     print("Retrieving search query links...")
-    """Takes a list of search queries and returns a dict mapping each query to a list of URLs resulting from the search query."""
+
     start_time = time.perf_counter()
     query_url_dict = {}
     for query in search_queries:
         query_url_dict[query] = [r["href"] for r in DDGS().text(query, max_results=4)]
     end_time = time.perf_counter()
-    print(f"Search query links retrieved in {end_time - start_time} seconds\n")
+
+    total_time = end_time - start_time
+    print(f"Search query links retrieved in {total_time} seconds\n")
+    times.append(total_time)
 
     return query_url_dict
 
@@ -111,7 +122,10 @@ def get_html_text(query_url_dict):
         if not html_results[query]:
             del html_results[query]
     end_time = time.perf_counter()
-    print(f"HTML text retrieved in {end_time - start_time} seconds\n")
+
+    total_time = end_time - start_time
+    print(f"HTML text retrieved in {total_time} seconds\n")
+    times.append(total_time)
 
     return html_results
 
@@ -141,7 +155,10 @@ def interpret_results(html_results: dict) -> dict:
         if summary.strip() != "BLOCKED":
             summaries[query] = summary
     end_time = time.perf_counter()
-    print(f"Results interpreted in {end_time - start_time} seconds\n")
+
+    total_time = end_time - start_time
+    print(f"Results interpreted in {total_time} seconds\n")
+    times.append(total_time)
 
     return summaries
 
@@ -158,4 +175,7 @@ def research_tool(prompt: str) -> dict:
     return chat_response
 
 test_results = research_tool("Tell me about the difference between endogenous and exogenous variables in statistics")
-print("Results:\n", test_results)
+total_run_time = sum(times)
+print(f"Results:\n {test_results}\n\n")
+
+print(f"Total run time: {total_run_time} seconds")
