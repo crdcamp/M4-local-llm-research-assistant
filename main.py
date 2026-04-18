@@ -105,6 +105,7 @@ def get_html_text(query_url_dict):
     html_results = {}
 
     start_time = time.perf_counter()
+
     for query, urls in query_url_dict.items():
         html_results[query] = {}
 
@@ -112,15 +113,13 @@ def get_html_text(query_url_dict):
             try:
                 r = requests.get(url, timeout=7)
                 soup = BeautifulSoup(r.text, 'html.parser')
-
                 paragraphs = soup.find_all('p')
                 html_results[query][url] = [p.get_text() for p in paragraphs]
-
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
 
-        if not html_results[query]:
-            del html_results[query]
+    html_results = {k: v for k, v in html_results.items() if v}
+
     end_time = time.perf_counter()
 
     total_time = end_time - start_time
