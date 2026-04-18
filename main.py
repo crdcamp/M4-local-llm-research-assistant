@@ -123,6 +123,7 @@ def get_html_text(query_url_dict):
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
 
+    # Delete empty entries
     html_results = {
         query: {url: paragraphs for url, paragraphs in urls.items() if paragraphs}
         for query, urls in html_results.items()
@@ -137,6 +138,7 @@ def get_html_text(query_url_dict):
 
     return html_results
 
+# Only interprets the first result for now
 def interpret_results(html_results: dict) -> dict:
     print("Interpreting HTML results...")
     summaries = {}
@@ -179,6 +181,9 @@ def research_tool(prompt: str) -> dict:
     with open("html_results.json", "w") as f:
         json.dump(html_text, f, indent=4)
     chat_response = interpret_results(html_text)
+
+    with open("prompt_results.json", "w") as f:
+        json.dump(chat_response, f, indent=4)
 
     return chat_response
 
