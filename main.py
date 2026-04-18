@@ -35,6 +35,11 @@ times = []
 #         result = research_tool(data)
 #         await websocket.send_text(result)
 
+# I'll figure this out later
+def function_timer(function):
+    pass
+
+
 print("Loading model...")
 model_load_start_time = time.perf_counter()
 model = Llama(
@@ -118,7 +123,11 @@ def get_html_text(query_url_dict):
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
 
-    html_results = {k: v for k, v in html_results.items() if v}
+    html_results = {
+        query: {url: paragraphs for url, paragraphs in urls.items() if paragraphs}
+        for query, urls in html_results.items()
+        if any(paragraphs for paragraphs in urls.values())
+    }
 
     end_time = time.perf_counter()
 
