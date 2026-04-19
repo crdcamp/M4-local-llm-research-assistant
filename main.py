@@ -11,6 +11,7 @@ import time
 * ADD DATE/TIME NAMED FILES FOR HTML RESULT AND CHAT OUTPUT
 * ADD TIMER FOR EACH FUNCTION AND ADD RESULT TO OUTPUT
 * Should probably just make a function for timing the functions...
+* Ensure you're saving the data in a trainable format
 """
 
 html_results_dir = "test_results/html_results"
@@ -110,7 +111,6 @@ def get_html_text(query_url_dict):
     html_results = {}
 
     start_time = time.perf_counter()
-
     for query, urls in query_url_dict.items():
         html_results[query] = {}
 
@@ -129,7 +129,6 @@ def get_html_text(query_url_dict):
         for query, urls in html_results.items()
         if any(paragraphs for paragraphs in urls.values())
     }
-
     end_time = time.perf_counter()
 
     total_time = end_time - start_time
