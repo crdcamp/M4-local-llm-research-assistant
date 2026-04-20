@@ -11,7 +11,8 @@ import time
 import pandas as pd
 
 """
-* I'm pretty sure the AI isn't basing it's answers off of the web results
+* FIRST THING'S FIRST: GET THAT HTML DATA SAVED CORRECTLY
+* SECOND THING'S SECOND: FINISH UP THE INTERPRETATION FUNCTION SO IT USES ALL ENTRIES
 * ADD DATE/TIME NAMED FILES FOR HTML RESULT AND CHAT OUTPUT
 * ADD TIMER FOR EACH FUNCTION AND ADD RESULT TO OUTPUT
 * Should probably just make a function for timing the functions...
@@ -21,14 +22,13 @@ import pandas as pd
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
 # %%
-file_paths = ["test_results/html_results", "test_results/prompt_results"]
-for path in file_paths:
+dirs = ["results/html_results"]
+for path in dirs:
     if not os.path.exists(path):
         os.makedirs(path)
 
-html_results_dir = file_paths[0]
-prompt_results_dir = file_paths[1]
-train_data_path = "test_results/train_data.csv"
+html_dir = dirs[0]
+train_data_path = "results/train_data.csv"
 
 times = []
 
@@ -132,23 +132,22 @@ def get_html_text(query_url_dict):
                 soup = BeautifulSoup(r.text, 'html.parser')
                 paragraphs = soup.find_all('p')
                 html_results[query][url] = [p.get_text() for p in paragraphs]
+
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
     end_time = time.perf_counter()
-
-    """
-    NEED TO DELETE EMPTY ENTRIES HERE AND SAVE THE RESULTS
-    TO HTML RESULTS
-    """
 
     total_time = end_time - start_time
     print(f"HTML text retrieved in {total_time} seconds\n")
     times.append(total_time)
 
-    # Save results
-    # timestr = time.strftime("%Y%m%d-%H%M%S")
-    # with open(f'{html_results_dir}/html_{timestr}', 'w') as f:
-    #     json.dump(html_results, f)
+    # Delete empty dictionary entries
+    #html_results = if not html_results
+
+    # Save with date/time stamps
+    timestr = time.strftime("%Y%m%d-%H%M%S") # Coulds just user `end_time` here
+    with open(f"{html_dir}/html_{timestr}", 'w', encoding='utf-8') as f:
+        json.dump(html_results, f, indent=4)
 
     return html_results
 
@@ -206,8 +205,8 @@ def research_tool(prompt: str) -> dict:
 
     return chat_response
 
-test_results = research_tool(input_prompt)
+results = research_tool(input_prompt)
 total_run_time = sum(times)
-print(f"Results:\n {test_results}\n\n")
+print(f"Results:\n {results}\n\n")
 
 print(f"Total run time: {total_run_time} seconds")
