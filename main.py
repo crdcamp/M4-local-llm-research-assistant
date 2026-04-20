@@ -8,25 +8,27 @@ from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
 import time
-import csv
 import pandas as pd
 
 """
+* I'm pretty sure the AI isn't basing it's answers off of the web results
 * ADD DATE/TIME NAMED FILES FOR HTML RESULT AND CHAT OUTPUT
 * ADD TIMER FOR EACH FUNCTION AND ADD RESULT TO OUTPUT
 * Should probably just make a function for timing the functions...
 * Ensure you're saving the data in a trainable format
 """;
 
+input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
+
 # %%
-file_paths = ["test_results/html_results", "test_results/prompt_results", "test_results/train_data.csv"]
+file_paths = ["test_results/html_results", "test_results/prompt_results"]
 for path in file_paths:
     if not os.path.exists(path):
         os.makedirs(path)
 
 html_results_dir = file_paths[0]
 prompt_results_dir = file_paths[1]
-train_data = file_paths[2]
+train_data_path = "test_results/train_data.csv"
 
 times = []
 
@@ -132,18 +134,21 @@ def get_html_text(query_url_dict):
                 html_results[query][url] = [p.get_text() for p in paragraphs]
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
-
-    # Delete empty entries
-    html_results = {
-        query: {url: paragraphs for url, paragraphs in urls.items() if paragraphs}
-        for query, urls in html_results.items()
-        if any(paragraphs for paragraphs in urls.values())
-    }
     end_time = time.perf_counter()
+
+    """
+    NEED TO DELETE EMPTY ENTRIES HERE AND SAVE THE RESULTS
+    TO HTML RESULTS
+    """
 
     total_time = end_time - start_time
     print(f"HTML text retrieved in {total_time} seconds\n")
     times.append(total_time)
+
+    # Save results
+    # timestr = time.strftime("%Y%m%d-%H%M%S")
+    # with open(f'{html_results_dir}/html_{timestr}', 'w') as f:
+    #     json.dump(html_results, f)
 
     return html_results
 
@@ -172,6 +177,8 @@ def interpret_results(html_results: dict) -> dict:
         )
 
         summary = response["choices"][0]["message"]["content"]
+
+
         if summary.strip() != "BLOCKED":
             summaries[query] = summary
     end_time = time.perf_counter()
@@ -179,6 +186,16 @@ def interpret_results(html_results: dict) -> dict:
     total_time = end_time - start_time
     print(f"Results interpreted in {total_time} seconds\n")
     times.append(total_time)
+
+    new_data = pd.DataFrame({
+        "prompt": [],
+        "response": [],
+    })
+
+    new_data['prompt'] = input_prompt
+    new_data['response'] = summary
+
+    new_data.to_csv(train_data_path, mode='a', header=False)
 
     return summaries
 
@@ -188,16 +205,12 @@ def research_tool(prompt: str) -> dict:
     search_queries_list = generate_search_queries(prompt)
     url_links = get_search_query_links(search_queries_list)
     html_text = get_html_text(url_links)
-    # (Temporary) Save HTML results
-    with open("html_results.json", "w") as f:
-        json.dump(html_text, f, indent=4)
     chat_response = interpret_results(html_text)
 
     return chat_response
 
-test_results = research_tool("Tell me about the difference between endogenous and exogenous variables in statistics")
+test_results = research_tool(input_prompt)
 total_run_time = sum(times)
 print(f"Results:\n {test_results}\n\n")
 
 print(f"Total run time: {total_run_time} seconds")
-pd
