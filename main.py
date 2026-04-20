@@ -187,14 +187,11 @@ def interpret_results(html_results: dict) -> dict:
     print(f"Results interpreted in {total_time} seconds\n")
     times.append(total_time)
 
+    # Append results to training data
     new_data = pd.DataFrame({
-        "prompt": [],
-        "response": [],
+        "prompt": [input_prompt],
+        "response": [summary],
     })
-
-    new_data['prompt'] = input_prompt
-    new_data['response'] = summary
-
     new_data.to_csv(train_data_path, mode='a', header=False)
 
     return summaries
