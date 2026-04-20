@@ -142,7 +142,11 @@ def get_html_text(query_url_dict):
     times.append(total_time)
 
     # Delete empty dictionary entries
-    #html_results = if not html_results
+    html_results = {
+        query: {url: paragraphs for url, paragraphs in url_dict.items() if paragraphs}
+        for query, url_dict in html_results.items()
+        if any(paragraphs for paragraphs in url_dict.values())
+    }
 
     # Save with date/time stamps
     timestr = time.strftime("%Y%m%d-%H%M%S") # Coulds just user `end_time` here
