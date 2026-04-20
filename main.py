@@ -11,13 +11,9 @@ import time
 import pandas as pd
 
 """
-* FIRST THING'S FIRST: GET THAT HTML DATA SAVED CORRECTLY
-* SECOND THING'S SECOND: FINISH UP THE INTERPRETATION FUNCTION SO IT USES ALL ENTRIES
-* ADD DATE/TIME NAMED FILES FOR HTML RESULT AND CHAT OUTPUT
-* ADD TIMER FOR EACH FUNCTION AND ADD RESULT TO OUTPUT
-* Should probably just make a function for timing the functions...
-* Ensure you're saving the data in a trainable format
-""";
+DOUBLE CHECK THE PROMPT INPUT SECTION... I think there's something wrong with it
+"""
+
 
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
