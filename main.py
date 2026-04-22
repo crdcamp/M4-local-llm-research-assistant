@@ -128,7 +128,7 @@ def parse_page(url):
     try:
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser')
-        return soup.find_all('p')
+        return [p.get_text(separator=" ", strip=True) for p in soup.find_all('p')]
     except Exception as e:
         print(f"Error fetching {url}: {e}")
         return None
@@ -147,11 +147,17 @@ def get_html_text(query_url_dict) -> dict:
             results = list(executor.map(parse_page, urls))
 
         html_results[query] = dict(zip(urls, results))
+        # Delete empty entries
+        html_results[query] = {url: res for url, res in html_results[query].items() if res}
+
 
     end_time = time.perf_counter()
     total_time = end_time - start_time
     print(f"HTML text retrieved in {total_time} seconds\n")
     times.append(total_time)
+
+    with open("summaries.json", "w") as f:
+        json.dump(html_results, f, indent=2)
 
     return html_results
 
