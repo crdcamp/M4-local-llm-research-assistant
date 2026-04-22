@@ -8,6 +8,8 @@ from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
 import time
+import pprint
+from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 
 """
@@ -15,10 +17,11 @@ DOUBLE CHECK THE PROMPT INPUT SECTION... I think there's something wrong with it
 Add ASYNC to parts if needed.
 """
 
-
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
-# We
+# Generating 5 search queries
+# Each of these search queries are then used to retrieve the top 4 search results
+# Therefore, we have 20 URL links in total
 
 # %%
 dirs = ["results/html_results"]
@@ -99,16 +102,16 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     print(f"Search queries generated in {total_time} seconds")
     times.append(total_time)
 
-    print(f"Queries: \n{query_list}\n")
+    print(f"{len(query_list)} queries generated: \n{query_list}\n")
 
     return query_list
 
 # %% Get links
 def get_search_query_links(search_queries: list[str]) -> dict:
     print("Retrieving search query links...")
-
     start_time = time.perf_counter()
     query_url_dict = {}
+
     for query in search_queries:
         query_url_dict[query] = [r["href"] for r in DDGS().text(query, max_results=4)]
     end_time = time.perf_counter()
@@ -117,12 +120,22 @@ def get_search_query_links(search_queries: list[str]) -> dict:
     print(f"Search query links retrieved in {total_time} seconds\n")
     times.append(total_time)
 
+    print(f"`query_url_dict:\n{pprint.pformat(query_url_dict)}\n")
+
     return query_url_dict
+
+def parse_page(url):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    paragraphs = soup.find_all('p')
+
+    return paragraphs
 
 # %% Get HTML
 def get_html_text(query_url_dict):
     print("Retrieving HTML text...")
     html_results = {}
+    MAX_THREADS = 4
 
     start_time = time.perf_counter()
     for query, urls in query_url_dict.items():
@@ -130,10 +143,8 @@ def get_html_text(query_url_dict):
 
         for url in urls:
             try:
-                r = requests.get(url, timeout=7)
-                soup = BeautifulSoup(r.text, 'html.parser')
-                paragraphs = soup.find_all('p')
-                html_results[query][url] = [p.get_text() for p in paragraphs]
+                with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+                    executor.map(parse_page, urls)
 
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
