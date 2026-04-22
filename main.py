@@ -99,10 +99,10 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     end_time = time.perf_counter()
 
     total_time = end_time - start_time
-    print(f"Search queries generated in {total_time} seconds")
+    print(f"{len(query_list)} search queries generated in {total_time} seconds")
     times.append(total_time)
 
-    print(f"{len(query_list)} queries generated: \n{query_list}\n")
+    print(f"Search Queries: {query_list}")
 
     return query_list
 
@@ -120,51 +120,39 @@ def get_search_query_links(search_queries: list[str]) -> dict:
     print(f"Search query links retrieved in {total_time} seconds\n")
     times.append(total_time)
 
-    print(f"`query_url_dict:\n{pprint.pformat(query_url_dict)}\n")
+    print(f"`query_url_dict`:\n{pprint.pformat(query_url_dict)}\n")
 
     return query_url_dict
 
 def parse_page(url):
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, 'html.parser')
-    paragraphs = soup.find_all('p')
-
-    return paragraphs
+    try:
+        r = requests.get(url)
+        soup = BeautifulSoup(r.text, 'html.parser')
+        return soup.find_all('p')
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return None
 
 # %% Get HTML
-def get_html_text(query_url_dict):
+def get_html_text(query_url_dict) -> dict:
     print("Retrieving HTML text...")
     html_results = {}
+    for query in query_url_dict:
+        html_results[query] = None
+    print("HTML DICT BEFORE DATA ADDED")
+    print(pprint.pformat(html_results))
     MAX_THREADS = 4
 
     start_time = time.perf_counter()
     for query, urls in query_url_dict.items():
-        html_results[query] = {}
+        with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+            results = list(executor.map(parse_page, urls))
+        html_results[query] = dict(zip(urls, results))
 
-        for url in urls:
-            try:
-                with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-                    executor.map(parse_page, urls)
-
-            except Exception as e:
-                print(f"Error fetching {url}: {e}")
     end_time = time.perf_counter()
-
     total_time = end_time - start_time
     print(f"HTML text retrieved in {total_time} seconds\n")
     times.append(total_time)
-
-    # Delete empty dictionary entries
-    html_results = {
-        query: {url: paragraphs for url, paragraphs in url_dict.items() if paragraphs}
-        for query, url_dict in html_results.items()
-        if any(paragraphs for paragraphs in url_dict.values())
-    }
-
-    # Save with date/time stamps
-    timestr = time.strftime("%Y%m%d-%H%M%S") # Coulds just user `end_time` here
-    with open(f"{html_dir}/html_{timestr}", 'w', encoding='utf-8') as f:
-        json.dump(html_results, f, indent=4)
 
     return html_results
 
