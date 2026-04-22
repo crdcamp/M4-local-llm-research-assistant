@@ -102,7 +102,7 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     print(f"{len(query_list)} search queries generated in {total_time} seconds")
     times.append(total_time)
 
-    print(f"Search Queries: {query_list}")
+    print(f"Search Queries:\n{query_list}\n")
 
     return query_list
 
@@ -137,8 +137,7 @@ def parse_page(url):
 def get_html_text(query_url_dict) -> dict:
     print("Retrieving HTML text...")
 
-    print(f"`query_url_dict`:\n{pprint.pformat(query_url_dict)}\n")
-
+    start_time = time.perf_counter()
     html_results = {}
 
     MAX_THREADS = 4
@@ -148,8 +147,6 @@ def get_html_text(query_url_dict) -> dict:
             results = list(executor.map(parse_page, urls))
 
         html_results[query] = dict(zip(urls, results))
-
-    print(pprint.pformat(html_results))
 
     end_time = time.perf_counter()
     total_time = end_time - start_time
