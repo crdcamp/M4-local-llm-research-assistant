@@ -12,6 +12,7 @@ import pandas as pd
 
 """
 DOUBLE CHECK THE PROMPT INPUT SECTION... I think there's something wrong with it
+Add ASYNC to parts if needed.
 """
 
 
@@ -74,7 +75,7 @@ def generate_search_queries(user_prompt: str) -> list[str]:
         messages=[
             {
                 "role": "system",
-                "content": "You are a search query generator. When given a question or topic, generate exactly five concise search engine queries a person could enter into a browser to research it."
+                "content": "You are a research assistant. Summarize the following content clearly and concisely, focusing on the most relevant facts and key points. Write as if presenting the information directly — do not frame your summary with references to any source, document, or medium (never say 'the article', 'the page', 'the web page', 'the text', 'the source', 'the content', or anything similar). Just state the facts. Ignore navigation text, ads, or other boilerplate. If the content appears to be a bot/security challenge, access denial, or CAPTCHA page rather than real content, respond with exactly: BLOCKED"
             },
             {
                 "role": "user",
