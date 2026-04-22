@@ -18,6 +18,8 @@ Add ASYNC to parts if needed.
 
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
+# We
+
 # %%
 dirs = ["results/html_results"]
 for path in dirs:
@@ -75,7 +77,7 @@ def generate_search_queries(user_prompt: str) -> list[str]:
         messages=[
             {
                 "role": "system",
-                "content": "You are a research assistant. Summarize the following content clearly and concisely, focusing on the most relevant facts and key points. Write as if presenting the information directly — do not frame your summary with references to any source, document, or medium (never say 'the article', 'the page', 'the web page', 'the text', 'the source', 'the content', or anything similar). Just state the facts. Ignore navigation text, ads, or other boilerplate. If the content appears to be a bot/security challenge, access denial, or CAPTCHA page rather than real content, respond with exactly: BLOCKED"
+                "content": "You are a search query generator. When given a question or topic, generate exactly five concise search engine queries a person could enter into a browser to research it."
             },
             {
                 "role": "user",
@@ -89,14 +91,17 @@ def generate_search_queries(user_prompt: str) -> list[str]:
     )
 
     content = response["choices"][0]["message"]["content"]
-    parsed = json.loads(content)
+    # Ensure the queries are in list format
+    query_list = json.loads(content)["queries"]
     end_time = time.perf_counter()
 
     total_time = end_time - start_time
-    print(f"Search queries generated in {total_time} seconds\n")
+    print(f"Search queries generated in {total_time} seconds")
     times.append(total_time)
 
-    return parsed["queries"]
+    print(f"Queries: \n{query_list}\n")
+
+    return query_list
 
 # %% Get links
 def get_search_query_links(search_queries: list[str]) -> dict:
