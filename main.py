@@ -136,18 +136,20 @@ def parse_page(url):
 # %% Get HTML
 def get_html_text(query_url_dict) -> dict:
     print("Retrieving HTML text...")
-    html_results = {}
-    for query in query_url_dict:
-        html_results[query] = None
-    print("HTML DICT BEFORE DATA ADDED")
-    print(pprint.pformat(html_results))
-    MAX_THREADS = 4
 
-    start_time = time.perf_counter()
+    print(f"`query_url_dict`:\n{pprint.pformat(query_url_dict)}\n")
+
+    html_results = {}
+
+    MAX_THREADS = 4
     for query, urls in query_url_dict.items():
+        # Process all 4 urls for each query simultaneously
         with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
             results = list(executor.map(parse_page, urls))
+
         html_results[query] = dict(zip(urls, results))
+
+    print(pprint.pformat(html_results))
 
     end_time = time.perf_counter()
     total_time = end_time - start_time
