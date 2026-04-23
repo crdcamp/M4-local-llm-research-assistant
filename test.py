@@ -1,4 +1,5 @@
 # %% Imports
+from email import message
 import os
 from llama_cpp import Llama
 from pydantic import BaseModel
@@ -33,6 +34,7 @@ summary_results_path = "results/summaries.json"
 html_text_dir = "data/html_text"
 html_summary_dir = "data/summary"
 os.makedirs(html_text_dir, exist_ok=True)
+os.makedirs(html_summary_dir, exist_ok=True)
 
 times = []
 
@@ -157,10 +159,43 @@ def get_html_text(query_url_dict):
 
     return html_results
 
+def clean_html_text():
+    for filename in os.listdir(html_text_dir):
+        file_path = os.path.join(html_text_dir, filename)
+
+        with open(file_path, 'r', encoding='utf-8') as f:
+            html_text = f.read()
+
+        response = model.create_chat_completion(
+            messages=[
+                {
+                    "role": "system",
+                    "content": clean_html_prompt
+                },
+                {
+                    "role": "user",
+                    "content": html_text
+                }
+            ]
+        )
+
+        cleaned_md = response["choices"][0]["message"]["content"]
+
+        if cleaned_md.strip() != "BLOCKED":
+            output_path = os.path.join(html_summary_dir, filename.replace(".txt", ".md"))
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(cleaned_md)
+
+        # For when testing is done
+        #os.remove(file_path)
+
+    print("Cleaning done")
+
 def research_tool():
     search_queries_list = generate_search_queries(input_prompt)
     url_links = get_search_query_links(search_queries_list)
     get_html_text(url_links)
+    #clean_html_text()
 
 research_tool()
 # Call all functions up to `clean_html()`
