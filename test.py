@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import time
 from concurrent.futures import ThreadPoolExecutor
 import pprint
+from langchain.chains import RetrievalQA
 
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
@@ -186,7 +187,7 @@ def clean_html_text():
     print("Cleaning done")
 
 def vecotrize_results():
-    for filename in os.listdir(summary_results_path):
+    for filename in os.listdir(html_summary_dir):
         pass
 
 # def research_tool():

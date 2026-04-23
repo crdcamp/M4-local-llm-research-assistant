@@ -12,3 +12,5 @@ To summarize, I'm trying to create an extremely scaled down version of [Perplexi
 # The Model I'm Using
 
 * [bartowski/Qwen2.5-7B-Instruct-Q4_K_M.gguf](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/blob/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf) (A Qwen model quantized down to 4 bits)
+
+# Post-Project Conclusions
