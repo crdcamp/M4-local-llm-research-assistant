@@ -374,27 +374,37 @@ def get_html_text(query_url_dict) -> dict:
     with open(html_results_path, "w") as f:
         json.dump(html_results, f, indent=2)
 
-def clean_html(file):
-    with open(file, 'r', encoding='utf-8') as input:
-        html_text = input.read()
+def clean_html(file_path):
+    with open(file_path, 'r', encoding='utf-8') as input_file:
+        html_text = input_file.read()
 
     response = model.create_chat_completion(
         messages=[
-                    {"role": "system", "content": clean_html_prompt},
-                    {"role": "user", "content": html_text}
-                ]
-            )
+            {"role": "system", "content": clean_html_prompt},
+            {"role": "user", "content": html_text}
+        ]
+    )
 
     result = response["choices"][0]["message"]["content"]
 
-    if result != "BLOCKED":
-        with open(html_summary_dir, 'a', encoding='utf-8') as output:
+    if result.strip() != "BLOCKED":
+        output_file_path = os.path.join(html_summary_dir, "final_research.md")
+        with open(output_file_path, 'a', encoding='utf-8') as output:
+            output.write(f"\n\n## Source: {file_path}\n")
             output.write(result)
 
 def research_tool(prompt: str):
     search_queries_list = generate_search_queries(prompt)
     url_links = get_search_query_links(search_queries_list)
-    html_text = get_html_text(url_links)
+    get_html_text(url_links)
 
-    for file in html_text_dir:
-        clean_html(file)
+    print("Cleaning and organizing web text...")
+    # Iterate through the files created in the directory
+    for filename in os.listdir(html_text_dir):
+        if filename.endswith(".txt"):
+            full_path = os.path.join(html_text_dir, filename)
+            clean_html(full_path)
+
+    print(f"Research complete. Summary saved to {html_summary_dir}")
+
+research_tool(input_prompt)
