@@ -1,5 +1,4 @@
 # %% Imports
-from email import message
 import os
 from llama_cpp import Llama
 from pydantic import BaseModel
@@ -16,21 +15,15 @@ input_prompt = "Tell me about the difference between endogenous and exogenous va
 clean_html_prompt = """You are a text cleaning engine. Your sole purpose is to convert messy scraped web text into clean, semantic Markdown for a database.
 
 RULES:
-1. Extract only the primary article content, headers, and lists.
+1. Extract only the primary article content.
 2. Strip out all navigation menus, footers, ad blocks, social media links, and cookie consent warnings.
 3. Use Markdown formatting (# for headers, - for lists, ** for bold).
-4. If the text contains a CAPTCHA, "Access Denied," or a bot-protection message (like Cloudflare), respond with exactly one word: BLOCKED.
-5. NEVER include introductory or concluding remarks. Do not say "Here is the cleaned text." Start immediately with the content.
-6. Preserve the original meaning but remove repetitive "click here" or "read more" buttons."""
+4. TRIGGER WORD: If the input text contains a CAPTCHA, "Access Denied," "Cloudflare," "403 Forbidden," "Pardon Our Interruption," or any clear bot-protection message, respond with exactly one word: BLOCKED.
+5. STRICT ENFORCEMENT: If BLOCKED is triggered, do not provide any other text, explanations, or Markdown.
+6. NEVER include introductory or concluding remarks. Start immediately with the content.
+7. Preserve the original meaning but remove repetitive "click here" or "read more" buttons."""
 
-# Generating 5 search queries
-# Each of these search queries are then used to retrieve the top 4 search results
-# Therefore, we have 20 URL links in total
-
-# %% File Paths
-html_results_path = "results/html_results.json"
-summary_results_path = "results/summaries.json"
-
+# %% File paths
 html_text_dir = "data/html_text"
 html_summary_dir = "data/summary"
 os.makedirs(html_text_dir, exist_ok=True)
@@ -160,6 +153,7 @@ def get_html_text(query_url_dict):
     return html_results
 
 def clean_html_text():
+    print("Cleaning HTML text...")
     for filename in os.listdir(html_text_dir):
         file_path = os.path.join(html_text_dir, filename)
 
@@ -187,17 +181,21 @@ def clean_html_text():
                 f.write(cleaned_md)
 
         # For when testing is done
-        #os.remove(file_path)
+        os.remove(file_path)
 
     print("Cleaning done")
 
-def research_tool():
-    search_queries_list = generate_search_queries(input_prompt)
-    url_links = get_search_query_links(search_queries_list)
-    get_html_text(url_links)
-    #clean_html_text()
+def vecotrize_results():
+    for filename in os.listdir(summary_results_path):
+        pass
 
-research_tool()
+# def research_tool():
+#     search_queries_list = generate_search_queries(input_prompt)
+#     url_links = get_search_query_links(search_queries_list)
+#     get_html_text(url_links)
+#     clean_html_text()
+
+#research_tool()
 # Call all functions up to `clean_html()`
 
 # Point new function to the html results directory

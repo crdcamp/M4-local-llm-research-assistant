@@ -1,3 +1,5 @@
 __pycache__/
 models/
 .DS_Store
+data/html_text
+data/summary
