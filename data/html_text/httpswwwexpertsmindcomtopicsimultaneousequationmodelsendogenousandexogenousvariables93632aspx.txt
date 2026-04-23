@@ -1,0 +1,37 @@
+Already have an account? Get multiple benefits of using own account!
+
+Login in your account..!
+
+
+
+Remember me
+
+
+Don't have an account? Create your account in less than a minutes, 
+
+Forgot password? how can I recover my password now!
+
+Enter right registered email to receive password! 
+
+Endogenous and exogenous variables:
+
+There are two types of variables in simultaneous equation models: endogenbus and exogenous.
+
+Endogenous  Variables get determined  jointly and interdependently within the model. The endogenous variables are determined by the exogenous variables. Exogenous Variables  are determined outside the model and  independently of the endogenous  variables. These  exogenous  variables determine the  endogenous variables but the endogenous variables cannot  affect  the exogenous variables.  Lagged Dependent Variables: 
+
+In  a model we  can  include the  lagged value of an endogenous vaiiable alsd. For example,  Ct  is  current  year consumption  and  is  assumed  to  be  an  endogenous variable.  If  we  consider  Ct-1  in  another  equation (which  implies  past  year consumption), then  it is lagged endogenous variable.
+
+Predetermined Variables: In addition  to the above, often we come across  the term  'predetermined variable'.  It includes  both exogenous variables and the lagged endogenous  variables.
+
+Get guaranteed satisfaction & time on delivery in every assignment order you paid with us! We ensure premium quality solution document along with free turntin report! 
+
+whatsapp: +91-977-207-8620
+
+Phone: +91-977-207-8620
+
+Email: [email protected]
+
+ 
+
+All rights reserved! Copyrights ©2019-2020 ExpertsMind IT Educational Pvt Ltd
+

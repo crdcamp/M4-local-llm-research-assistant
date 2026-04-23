@@ -1,9 +1,0 @@
-An example of an exogenous variable is the occurrence and quantity of rainfall.
-
-
-Depending on the economic model under analysis, it may be the case that the demand for certain products, for example, may be affected by the weather.
-
-
-
-
-

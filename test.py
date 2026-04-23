@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from concurrent.futures import ThreadPoolExecutor
+import pprint
 
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
@@ -55,6 +56,113 @@ times.append(model_load_total_time)
 class SearchQueries(BaseModel):
     queries: list[str]
 
+# %% Generate search queries
+def generate_search_queries(user_prompt: str) -> list[str]:
+    print("Generating search queries...")
+
+    start_time = time.perf_counter()
+    response = model.create_chat_completion(
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a search query generator. When given a question or topic, generate exactly five concise search engine queries a person could enter into a browser to research it."
+            },
+            {
+                "role": "user",
+                "content": user_prompt
+            }
+        ],
+        response_format={
+            "type": "json_object",
+            "schema": SearchQueries.model_json_schema()
+        }
+    )
+
+    content = response["choices"][0]["message"]["content"]
+    # Ensure the queries are in list format
+    query_list = json.loads(content)["queries"]
+    end_time = time.perf_counter()
+
+    total_time = end_time - start_time
+    print(f"{len(query_list)} search queries generated in {total_time} seconds")
+    times.append(total_time)
+
+    print(f"Search Queries:\n{query_list}\n")
+
+    return query_list
+
+# %% Get links
+def get_search_query_links(search_queries: list[str]) -> dict:
+    print("Retrieving search query links...")
+    start_time = time.perf_counter()
+    query_url_dict = {}
+
+    for query in search_queries:
+        query_url_dict[query] = [r["href"] for r in DDGS().text(query, max_results=4)]
+    end_time = time.perf_counter()
+
+    total_time = end_time - start_time
+    print(f"Search query links retrieved in {total_time} seconds\n")
+    times.append(total_time)
+
+    print(f"`query_url_dict`:\n{pprint.pformat(query_url_dict)}\n")
+
+    return query_url_dict
+
+def parse_page(url):
+    try:
+        r = requests.get(url)
+        soup = BeautifulSoup(r.text, 'html.parser')
+        result = soup.find_all('p')
+
+        if result:
+            name = "".join(c for c in url if c.isalnum())
+
+            with open(f"{html_text_dir}/{name}.txt", 'w', encoding='utf-8') as f:
+                for paragraph in result:
+                    f.write(paragraph.get_text() + "\n\n")
+
+        else:
+            print(f"No paragraphs found for {url}. Skipping file creation")
+
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return None
+
+# %% Get HTML
+def get_html_text(query_url_dict):
+    print("Retrieving HTML text...")
+
+    start_time = time.perf_counter()
+    html_results = {}
+
+    MAX_THREADS = 4
+    for query, urls in query_url_dict.items():
+        # Process all 4 urls for each query simultaneously
+        with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+            results = list(executor.map(parse_page, urls))
+
+        html_results[query] = dict(zip(urls, results))
+        # Delete empty entries
+        html_results[query] = {url: res for url, res in html_results[query].items() if res}
+
+
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
+    print(f"HTML text retrieved in {total_time} seconds\n")
+    times.append(total_time)
+
+    with open(html_results_path, "w") as f:
+        json.dump(html_results, f, indent=2)
+
+    return html_results
+
+def research_tool():
+    search_queries_list = generate_search_queries(input_prompt)
+    url_links = get_search_query_links(search_queries_list)
+    get_html_text(url_links)
+
+research_tool()
 # Call all functions up to `clean_html()`
 
 # Point new function to the html results directory
