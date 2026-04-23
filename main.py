@@ -29,9 +29,12 @@ input_prompt = "Tell me about the difference between endogenous and exogenous va
 # Each of these search queries are then used to retrieve the top 4 search results
 # Therefore, we have 20 URL links in total
 
-# %%
+# %% File Paths
 html_results_path = "results/html_results.json"
 summary_results_path = "results/summaries.json"
+
+html_text_dir = "data/html_text"
+os.makedirs(html_text_dir, exist_ok=True)
 
 times = []
 
@@ -129,7 +132,15 @@ def parse_page(url):
     try:
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser')
-        return [p.get_text(separator=" ", strip=True) for p in soup.find_all('p')]
+        result = soup.find_all('p')
+
+        # NEED A BETTER NAMING CONVENTION
+        name = url.replace('/', '').replace(':', '').replace('.', '').replace('"', '')
+
+        with open(f"{html_text_dir}/{name}.txt", 'w', encoding='utf-8') as f:
+            for paragraph in result:
+                f.write(paragraph.get_text() + "\n\n")
+
     except Exception as e:
         print(f"Error fetching {url}: {e}")
         return None
