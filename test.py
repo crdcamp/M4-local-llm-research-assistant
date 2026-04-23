@@ -1,6 +1,5 @@
 # %% Imports
 import os
-from fastapi import FastAPI, WebSocket
 from llama_cpp import Llama
 from pydantic import BaseModel
 import json
@@ -8,20 +7,7 @@ from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
 import time
-import pprint
 from concurrent.futures import ThreadPoolExecutor
-import pandas as pd
-
-"""
-NOW WE JUST NEED TO CLEAN UP THE WEB SCRAPING ENTIRELY.
-WE WANT PURELY SEMANTIC TEXT ORGANIZED BY WEBSITE THAT'S SAVED TO A
-SINGLE MARKDOWN FILE TO FEED THE LLM
-
-THIS IS A HARD REQUIREMENT. THE LLM WILL NOT KNOW WHAT TO DO OTHERWISE
-
-* "BLOCKED" parameter isn't working every time. Might be fixed after cleaning up web scrape
-
-"""
 
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
 
@@ -49,23 +35,6 @@ os.makedirs(html_text_dir, exist_ok=True)
 
 times = []
 
-# FastAPI integration (for later)
-# app = FastAPI()
-
-# html = None
-
-# @app.get("/")
-# async def get():
-#     return HTMLResponse(html)
-
-# @app.websocket("/ws")
-# async def websocket_endpoint(websocket: WebSocket):
-#     await websocket.accept()
-#     while True:
-#         data = await websocket.receive_text()
-#         result = research_tool(data)
-#         await websocket.send_text(result)
-
 # %% Load Model
 print("Loading model...")
 model_load_start_time = time.perf_counter()
@@ -85,3 +54,14 @@ times.append(model_load_total_time)
 # Structured list output for `generate_search_queries`
 class SearchQueries(BaseModel):
     queries: list[str]
+
+# Call all functions up to `clean_html()`
+
+# Point new function to the html results directory
+
+# Have the model clean the html text, save to a different directory,
+# then delete html text results
+
+# Put the cleaned results into RAG
+
+# Interpret RAG results
