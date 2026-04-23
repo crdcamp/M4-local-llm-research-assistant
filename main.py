@@ -13,8 +13,14 @@ from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 
 """
-DOUBLE CHECK THE PROMPT INPUT SECTION... I think there's something wrong with it
-Add ASYNC to parts if needed.
+NOW WE JUST NEED TO CLEAN UP THE WEB SCRAPING ENTIRELY.
+WE WANT PURELY SEMANTIC TEXT ORGANIZED BY WEBSITE THAT'S SAVED TO A
+SINGLE MARKDOWN FILE TO FEED THE LLM
+
+THIS IS A HARD REQUIREMENT. THE LLM WILL NOT KNOW WHAT TO DO OTHERWISE
+
+* "BLOCKED" parameter isn't working every time. Might be fixed after cleaning up web scrape
+
 """
 
 input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
@@ -24,13 +30,8 @@ input_prompt = "Tell me about the difference between endogenous and exogenous va
 # Therefore, we have 20 URL links in total
 
 # %%
-dirs = ["results/html_results"]
-for path in dirs:
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-html_dir = dirs[0]
-train_data_path = "results/train_data.csv"
+html_results_path = "results/html_results.json"
+summary_results_path = "results/summaries.json"
 
 times = []
 
@@ -156,7 +157,7 @@ def get_html_text(query_url_dict) -> dict:
     print(f"HTML text retrieved in {total_time} seconds\n")
     times.append(total_time)
 
-    with open("summaries.json", "w") as f:
+    with open(html_results_path, "w") as f:
         json.dump(html_results, f, indent=2)
 
     return html_results
@@ -169,39 +170,37 @@ def interpret_results(html_results: dict) -> dict:
 
     start_time = time.perf_counter()
     for query, url_dict in html_results.items():
-        first_url = next(iter(url_dict))
-        content = "\n\n".join(url_dict[first_url])  # join list of paragraphs into one string
+        query_summaries = []
 
-        response = model.create_chat_completion(
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a research assistant. Summarize the following content clearly and concisely, focusing on the most relevant facts and key points. Write as if presenting the information directly — do not frame your summary with references to any source, document, or medium (never say 'the article', 'the page', 'the web page', 'the text', 'the source', 'the content', or anything similar). Just state the facts. Ignore navigation text, ads, or other boilerplate. If the content appears to be a bot/security challenge, access denial, or CAPTCHA page rather than real content, respond with exactly: BLOCKED"
-                },
-                {
-                    "role": "user",
-                    "content": content
-                }
-            ]
-        )
+        for url, paragraphs in url_dict.items():
+            content = "\n\n".join(paragraphs)
 
-        summary = response["choices"][0]["message"]["content"]
+            response = model.create_chat_completion(
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a research assistant. Summarize the following content clearly and concisely, focusing on the most relevant facts and key points. Write as if presenting the information directly — do not frame your summary with references to any source, document, or medium (never say 'the article', 'the page', 'the web page', 'the text', 'the source', 'the content', or anything similar). Just state the facts. Ignore navigation text, ads, or other boilerplate. If the content appears to be a bot/security challenge, access denial, or CAPTCHA page rather than real content, respond with exactly: BLOCKED"
+                    },
+                    {
+                        "role": "user",
+                        "content": content
+                    }
+                ]
+            )
 
+            summary = response["choices"][0]["message"]["content"]
+            query_summaries.append(summary)
 
-        if summary.strip() != "BLOCKED":
-            summaries[query] = summary
+        if query_summaries:
+            summaries[query] = query_summaries
+
     end_time = time.perf_counter()
-
     total_time = end_time - start_time
     print(f"Results interpreted in {total_time} seconds\n")
     times.append(total_time)
 
-    # Append results to training data
-    new_data = pd.DataFrame({
-        "prompt": [input_prompt],
-        "response": [summary],
-    })
-    new_data.to_csv(train_data_path, mode='a', header=False)
+    with open(summary_results_path, "w") as f:
+        json.dump(summaries, f, indent=2)
 
     return summaries
 
