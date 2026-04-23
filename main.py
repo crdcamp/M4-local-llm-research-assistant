@@ -34,6 +34,7 @@ html_results_path = "results/html_results.json"
 summary_results_path = "results/summaries.json"
 
 html_text_dir = "data/html_text"
+html_summary_dir = "data/summary"
 os.makedirs(html_text_dir, exist_ok=True)
 
 times = []
@@ -134,12 +135,15 @@ def parse_page(url):
         soup = BeautifulSoup(r.text, 'html.parser')
         result = soup.find_all('p')
 
-        # NEED A BETTER NAMING CONVENTION
-        name = url.replace('/', '').replace(':', '').replace('.', '').replace('"', '')
+        if result:
+            name = "".join(c for c in url if c.isalnum())
 
-        with open(f"{html_text_dir}/{name}.txt", 'w', encoding='utf-8') as f:
-            for paragraph in result:
-                f.write(paragraph.get_text() + "\n\n")
+            with open(f"{html_text_dir}/{name}.txt", 'w', encoding='utf-8') as f:
+                for paragraph in result:
+                    f.write(paragraph.get_text() + "\n\n")
+
+        else:
+            print(f"No paragraphs found for {url}. Skipping file creation")
 
     except Exception as e:
         print(f"Error fetching {url}: {e}")
@@ -172,6 +176,26 @@ def get_html_text(query_url_dict) -> dict:
         json.dump(html_results, f, indent=2)
 
     return html_results
+
+sys_prompt = None
+user_prompt = None
+def clean_html(file):
+    with open(file, 'r', encoding='utf-8') as input:
+        html_text = input.read()
+
+    response = model.create_chat_completion(
+        messages=[
+                    {"role": "system", "content": sys_prompt},
+                    {"role": "user", "content": html_text}
+                ]
+            )
+
+    result = response["choices"][0]["message"]["content"]
+
+    if result != "BLOCKED":
+        with open(html_summary_dir, 'a', encoding='utf-8') as output:
+            output.write(result)
+
 
 # %% Interpret
 # Only interprets the first result for now

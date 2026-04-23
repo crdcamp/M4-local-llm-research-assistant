@@ -1,0 +1,100 @@
+
+              Agree & Join LinkedIn
+            
+
+
+      By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement, Privacy Policy, and Cookie Policy.
+    
+
+Be the first to add your personal experience
+
+Be the first to add your personal experience
+
+Be the first to add your personal experience
+
+Be the first to add your personal experience
+
+
+If you are interested in microeconometric analysis of individual and household behavior, you need to understand the role of endogenous and exogenous variables in your models. These variables are crucial for identifying causal effects and estimating parameters of interest. In this article, you will learn what are the differences between endogenous and exogenous variables, how to test for endogeneity, and how to deal with it using various methods.
+
+
+
+Endogenous variables are those that are determined by the model, while exogenous variables are those that are determined outside the model. In other words, endogenous variables are influenced by other variables in the model, while exogenous variables are not. For example, in a simple demand function, the quantity demanded of a good is endogenous, while the price of the good is exogenous. However, the price of the good may be endogenous in another model that explains how it is set by the market.
+
+
+
+            Data Analyst | Econ PhD candidate | Expert in Visualization & Project Management | Driving Business Innovation | DS & ML Practitioner
+          
+
+
+
+A prime example of an endogenous variable is the price when predicting a product's demand. While it's evident that price can affect demand, demand reciprocally can influence the price. This two-way relationship introduces the simultaneity problem in econometric studies. Overlooking this can result in biased estimates, jeopardizing the accuracy of the analysis. In order to avoid the endogeneity issue, one can use instrumental variables or panel data models (Generalized Method of Moments, Fixed and Random effects, BLP) among others.
+
+An exogenous variable in this example will be a government-initiated major road infrastructure project, which would independently drive up house prices in a nearby village to a city.
+
+
+            Ops, Strategy & Systems | Ethical AI & Sustainability Advocate | TEDx Speaker
+          
+
+
+
+A recent example would be when mapping out the impact of decommissioning the Japanese nuclear power plant on Japan’s sustainable development - the endogenous variables are essentially decommissioned NPP as Beta1, the width of sea land as Beta2 and then any beta (4,5,6,7) depending on what are easier proxies to calculate the impact of NPP on sustainable growth (GDP). All these are endogenous variables.
+
+Anything not considered in this framework is exogenous. 
+
+Interestingly - the lower the number of exogenous factors in your equation, the more accurate your p-value may come out to be, as residual values decreases substantially.
+
+
+The endogeneity problem arises when an endogenous variable is correlated with the error term in a regression model. This violates the assumption of independence between the explanatory variables and the error term, which is essential for obtaining unbiased and consistent estimates of the coefficients. The endogeneity problem can be caused by several factors, such as omitted variables, measurement errors, reverse causality, or simultaneity.
+
+
+
+One way to test for endogeneity is to use the Hausman test, which compares the estimates obtained from two different models: one that treats the suspected variable as endogenous, and one that treats it as exogenous. The test is based on the idea that if the variable is truly exogenous, then the estimates should not differ significantly between the two models. However, if the variable is endogenous, then the estimates should differ, and the model that treats it as endogenous should be preferred.
+
+
+
+When dealing with endogeneity, there are a few methods to consider depending on the source and nature of the issue. Instrumental variables, for example, uses a variable that is correlated to the endogenous variable but not the error term as an instrument to measure the causal effect. Fixed effects controls for unobserved heterogeneity across individuals or groups using dummy variables or within-group transformations. Panel data exploits the longitudinal aspect of data to account for time-invariant factors causing endogeneity. Randomized experiments create exogenous variation in the treatment variable by randomly assigning individuals or groups to different conditions. Lastly, structural models specify the underlying behavioral or economic relationships to estimate parameters of interest.
+
+
+
+This is a space to share examples, stories, or insights that don’t fit into any of the previous sections. What else would you like to add?
+
+
+
+                You're considering cost-saving measures. How do you convince a skeptical stakeholder of their necessity?
+              
+
+
+                106 contributions
+              
+
+
+                You're juggling multiple economic analyses with tight deadlines. How do you decide which tasks to prioritize?
+              
+
+
+                84 contributions
+              
+
+
+                You're drowning in economic data. How do you choose the right indicators to analyze?
+              
+
+
+                15 contributions
+              
+
+
+                Dealing with a team member stuck on outdated economic data. Are you ready to update your forecasting models?
+              
+
+
+                You're facing conflicting opinions on economic indicators. How do you decide which ones matter most?
+              
+
+
+                You're navigating economic uncertainty. How can you adapt your strategic plan to changing indicators?
+              
+
+
+

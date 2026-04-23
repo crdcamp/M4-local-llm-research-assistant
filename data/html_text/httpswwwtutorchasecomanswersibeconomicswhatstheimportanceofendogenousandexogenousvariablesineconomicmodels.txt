@@ -1,0 +1,34 @@
+Endogenous and exogenous variables are crucial in economic models for determining cause-effect relationships and predicting economic outcomes.Endogenous variables are those that are determined within the model itself. They are the output of the model, the values of which are influenced by other variables in the model. For instance, in a simple supply and demand model, price and quantity are endogenous variables. They are determined by the interaction of supply (which could be influenced by factors like production costs) and demand (which could be influenced by factors like consumer income and preferences). Understanding endogenous variables is key to understanding how changes within an economic system can impact outcomes.Exogenous variables, on the other hand, are those that are determined outside of the model. They are inputs to the model, and their values are taken as given. In the supply and demand example, factors like consumer income and production costs would be exogenous variables. They are assumed to be determined by forces outside the model, and they influence the endogenous variables (price and quantity) through their impact on supply and demand. Understanding exogenous variables is crucial for understanding how changes outside an economic system can impact outcomes within the system.The distinction between endogenous and exogenous variables is important because it helps economists to construct models that accurately reflect the real world. By identifying which variables are endogenous and which are exogenous, economists can better understand the relationships between different factors in an economy and make more accurate predictions about future economic outcomes.Moreover, the distinction helps in policy making. Policymakers can use economic models to predict the impact of changes in exogenous variables (like government spending or tax rates) on endogenous variables (like GDP or unemployment). This can help them to design policies that will have the desired effects on the economy.In conclusion, endogenous and exogenous variables play a vital role in economic modelling. They help in understanding the cause-effect relationships in an economy, predicting future economic outcomes, and designing effective economic policies.
+
+Study and Practice for Free
+
+Trusted by 100,000+ Students Worldwide
+
+Achieve Top Grades in your Exams with our Free Resources.
+
+Practice Questions, Study Notes, and Past Exam Papers for all Subjects!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.93/5 based on882 reviews in
+
+The world’s top online tutoring provider trusted by students, parents, and schools globally.
+

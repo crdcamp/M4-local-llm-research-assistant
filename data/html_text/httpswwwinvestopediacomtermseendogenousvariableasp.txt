@@ -1,0 +1,43 @@
+Julie Bang / Investopedia
+
+An endogenous variable is a component within a model whose value is influenced by interactions within the system it is part of.
+
+Get personalized, AI-powered answers built on 27+ years of trusted expertise.
+
+ An endogenous variable is one whose value is influenced or determined by other variables within the same statistical model. In other words, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Endogenous variables are the opposite of exogenous variables, which are independent variables or outside forces.
+
+
+ Endogenous variables are important in econometrics and economic modeling because they show whether a variable causes a particular effect. Economists employ causal modeling to explain outcomes by analyzing dependent variables based on a variety of factors. For example, in a model studying supply and demand, the price of a good is an endogenous factor because the price can be changed by the producer (supplier) in response to consumer demand.
+
+
+ Economists also include independent variables to help determine to which extent a result can be attributed to an exogenous or endogenous cause. Endogenous variables have values that shift as part of a functional relationship between other variables within the model. The relationship is also referred to as dependent and is seen as predictable in nature.
+
+
+ The variables typically correlate in such a way that a movement in one variable should result in a move in the other variable. In other words, the variables should correlate with each other. However, they don’t necessarily need to move in the same direction, meaning a rise in one factor could cause a fall in another. As long as the change in the variables is correlating, it’s considered endogenous—regardless of whether it’s a positive or negative correlation.
+
+
+Although endogenous variables are the dependent variables that correlate with each other, knowing to what extent exogenous variables impact a model is important to consider.
+
+ Outside of economics, other fields that use models with endogenous variables include meteorology and agriculture. Sometimes, the relationship in these models is only endogenous in one direction. For example, while pleasant weather may lead to a higher rate of tourism, higher tourism rates do not affect the weather.
+
+
+ In contrast to endogenous variables, exogenous variables are considered independent. In other words, one variable within the formula doesn’t dictate or directly correlate to a change in another. Exogenous variables have no direct or formulaic relationship. For example, personal income and color preference, rainfall and gas prices, and education obtained and favorite flower would all be considered exogenous factors.
+
+
+ For example, assume a model is examining the relationship between employee commute times and fuel consumption. As the commute time rises within the model, fuel consumption also increases. The relationship makes sense since the longer a person’s commute, the more fuel it takes to reach the destination. For example, a 30-mile commute requires more fuel than a 20-mile commute. Other relationships that may be endogenous include:
+
+
+Endogenous variables show whether a variable causes a particular effect. That makes them important in econometrics and economic modeling.
+
+Agriculture and meteorology are among the other fields that use models with endogenous variables.
+
+Unlike endogenous variables, exogenous variables are considered independent. One variable within the formula doesn’t dictate or directly correlate to a change in another.
+
+ An endogenous variable is a variable in a statistical model. It’s changed or determined by its relationship with other variables within the model.
+
+
+ To put it another way, an endogenous variable is synonymous with a dependent variable, meaning it correlates with other factors within the system being studied. Therefore, its values may be determined by other variables.
+
+
+Get personalized, AI-powered answers built on 27+ years of trusted expertise.
+
