@@ -1,0 +1,196 @@
+Online Tool To Extract Text From PDFs & Images
+
+Building Advanced Natural Language Processing (NLP) Applications
+
+Custom Machine Learning Models Extract Just What You Need
+
+The Doc Hawk, Our Custom Application For Legal Documents
+
+log in to extract
+
+ by Neri Van Otten | Apr 19, 2023 | Data Science, Machine Learning
+
+Endogenous and exogenous variables are two important concepts. In machine learning, endogenous variables are the variables that are directly influenced by other variables within the system being modelled. These variables are typically the outputs or dependent variables of the model. On the other hand, exogenous variables are variables that are not directly influenced by other variables in the system. These variables are typically the inputs or independent variables of the model.
+
+Table of Contents
+
+Identifying and differentiating between endogenous and exogenous variables in machine learning is essential. This can help create better models by reducing the risk of overfitting or including irrelevant variables. 
+
+This article will explain both concepts, provide examples, and show how they can be used in regression models, what possible problems occur and how to fix them.
+
+An exogenous variable is a variable in a statistical or mathematical model that is not influenced by other variables. It is often referred to as an independent or predictor variable, as it is used to predict the values of other variables in the model.
+
+Exogenous variables are typically considered to be outside the control of the model and are often used to explain the behaviour of the dependent variable. For example, income could be viewed as an exogenous variable in a consumer spending model. It is not influenced by consumer spending but is used to explain why it may increase or decrease.
+
+Exogenous variables are essential in many fields, including economics, finance, and social sciences. Analysts can better understand the factors influencing outcomes by identifying and analysing exogenous variables and making more accurate predictions.
+
+Let’s say you want to build a model to predict how many ice cream cones a particular ice cream shop will sell on a given day. For example, you could use variables like temperature, day of the week, and advertising spending to predict the number of cones sold.
+
+The temperature could be considered an exogenous variable because the number of cones sold does not directly influence it.
+
+In this scenario, temperature could be considered an exogenous variable because the number of cones sold does not directly influence it. The temperature may be a good predictor variable, as it could affect how many people are out and about and in the mood for ice cream, but the number of cones sold will not affect the temperature.
+
+On the other hand, the number of cones sold would be considered an endogenous variable because it is directly influenced by the other variables in the model, such as temperature and advertising spending. As the temperature and advertising spending increase or decrease, the number of cones sold will likely follow suit.
+
+An endogenous variable is a variable in a statistical or mathematical model that is directly influenced by other variables in the model. It is often referred to as a dependent or outcome variable, as it is predicted or explained by other variables in the model.
+
+Endogenous variables are typically influenced by exogenous variables (i.e., variables outside the model) and other endogenous variables within the model. For example, in an economic growth model, an investment could be considered an endogenous variable, as it is directly influenced by other variables within the model, such as government policies and consumer confidence.
+
+Endogenous variables are essential in many fields, including economics, social sciences, and engineering. By analysing endogenous variables, researchers and analysts can better understand the relationships between variables and predict how changes to one variable affect others within the model.
+
+Let’s say you want to build a model to predict the graduation rates of high school students. To predict graduation rates, you might use variables like family income, parental education, and student attendance.
+
+Graduation rates would be considered an endogenous variable because it is directly influenced by the other variables in the model.
+
+In this scenario, graduation rates would be considered an endogenous variable because it is directly influenced by the other variables in the model, such as family income and student attendance. For example, as family income increases, students may have access to more resources to help them succeed in school, leading to higher graduation rates. Similarly, as student attendance increases, students may be more likely to meet academic requirements and ultimately graduate.
+
+Family income and student attendance could be exogenous variables because graduation rates do not directly influence them. While they may affect the likelihood of graduation, changes to graduation rates will not directly affect family income or student attendance.
+
+Endogenous and exogenous variables are essential concepts in regression analysis. Regression analysis is a statistical technique that is used to model the relationship between one or more independent (exogenous) variables and a dependent (endogenous) variable.
+
+In regression analysis, the endogenous variable is the variable of interest, and the exogenous variables are the predictors used to explain the variation in the endogenous variable.
+
+Endogenous variables are crucial in regression analysis because they are modelled variables, and the analysis aims to estimate the relationship between the endogenous variable and the exogenous variables.
+
+Exogenous variables are also crucial in regression analysis because they help to explain the variation in the endogenous variable. Researchers can better understand the factors influencing the endogenous variable by including relevant exogenous variables in the regression model.
+
+For example, in a regression analysis that aims to model the relationship between student test scores (endogenous variable) and variables such as class size, teacher experience, and student socioeconomic status (exogenous variables), class size, teacher experience, and student socioeconomic status would be the exogenous variable. In contrast, student test scores would be the endogenous variable.
+
+Overall, endogenous and exogenous variables are fundamental to regression analysis. They help establish the relationship between variables and provide valuable insights into the factors influencing the variable of interest.
+
+Endogeneity is a common problem in regression analysis, where an endogenous variable is correlated with the error term and can lead to biased estimates and invalid inference. In addition, other variables influence endogenous variables in the model, and their inclusion in the regression model can create endogeneity problems.
+
+Endogeneity can arise in several situations, such as:
+
+An example of endogeneity can be the relationship between education and income. Education is a common predictor of income in regression models, but other factors, such as family background, natural ability, and motivation, may influence education. These factors may also influence income, creating endogeneity between education and income.
+
+If we include education as a predictor variable in a regression model that includes income as the dependent variable, we may find a positive relationship between education and income. However, this relationship may be biased if education is endogenous. Omitted variable bias may occur if we fail to include variables affecting education and income, such as the family background. Reverse causality may also arise if income influences education, such as when individuals pursue higher education to increase their income.
+
+To address endogeneity in this example, we can use instrumental variables correlated with education but uncorrelated with the error term, such as the distance to the nearest college or the number of college graduates in the local community. Then, we can use these instrumental variables to estimate the effect of education on income without bias.
+
+To address this issue, we can use several remedies, including:
+
+Overall, addressing endogeneity in regression analysis is vital to ensure that the estimates are accurate and the inference is valid. Researchers must choose the appropriate remedy based on the characteristics of the data and the research question.
+
+The importance of endogenous and exogenous variables in machine learning lies in their ability to help create accurate and effective predictive models. Machine learning models can better predict outcomes and provide valuable insights by understanding the relationships between these variables.
+
+Endogenous variables are crucial in machine learning, as they are the variables the model attempts to predict or explain. Therefore, machine learning models can identify the most critical factors influencing the outcome variable and create a more accurate predictive model by analysing the relationships between endogenous and exogenous variables.
+
+Exogenous variables, on the other hand, provide valuable contextual information that can help explain endogenous variables’ behaviour. By including relevant exogenous variables in a machine learning model, we can better understand the factors that influence the outcome variable and improve the accuracy of the predictions.
+
+Using endogenous and exogenous variables in machine learning is essential for creating accurate and effective predictive models. By identifying and analysing these variables, machine learning models can provide valuable insights and inform decision-making across various fields.
+
+In conclusion, endogenous variables can cause biased estimates and invalid inferences in regression analysis. Endogeneity can arise for various reasons, such as omitted variable bias, reverse causality, simultaneity, measurement error, and selection bias. 
+
+Addressing endogeneity in regression analysis is vital to obtain accurate estimates and valid inferences. We can use various remedies, such as instrumental variables, two-stage least squares regression, control variables, and natural experiments, to address endogeneity and obtain unbiased estimates. 
+
+By carefully considering the potential sources of endogeneity and selecting appropriate remedies, we can improve the validity and reliability of our regression analysis.
+
+Neri Van Otten is the founder of Spot Intelligence, a machine learning engineer with over 12 years of experience specialising in Natural Language Processing (NLP) and deep learning innovation. Dedicated to making your projects succeed.
+
+Neri Van Otten is a machine learning and software engineer with over 12 years of Natural Language Processing (NLP) experience. Dedicated to making your projects succeed.
+
+Popular posts
+
+Top 7 Ways of Implementing Document & Text SimilarityTop 10 Open Source Large Language Models (LLM)Top 8 Most Useful Anomaly Detection Algorithms For Time SeriesSelf-attention Made Easy And How To Implement ItTop 3 Easy Ways To Remove Stop Word In Python
+
+Connect with us
+
+ Name  
+
+ Email  
+
+   Stay Updated With Our Newsletter  
+
+Table of Contents
+
+
+
+Introduction Modern NLP systems have advanced rapidly over the past decade, driven by the expansion of neural network architectures such as Transformers. As these...
+
+
+
+Introduction: The Shift Toward Effectiveness Over the past few years, the development of artificial intelligence has largely been driven by scale. Larger models, more...
+
+
+
+Introduction Natural language processing has moved rapidly from research labs to real business use. Today, LLM-powered systems support customer service, knowledge...
+
+
+
+Introduction In today’s AI-driven world, data is often called the new oil—and for good reason. High-quality, diverse datasets are the backbone of machine learning,...
+
+
+
+Introduction Large language models (LLMs) have rapidly become a core component of modern NLP applications, powering chatbots, search assistants, summarization tools,...
+
+
+
+Introduction: Why LMOps Exist Large Language Models have moved faster than almost any technology in recent memory. In a short time, teams have gone from experimenting...
+
+
+
+Introduction Uncertainty is everywhere. Whether we're forecasting tomorrow's weather, predicting customer demand, estimating equipment failure, or modelling the spread...
+
+
+
+Introduction Over the past few years, artificial intelligence has moved from simple pattern recognition to systems capable of performing highly complex tasks with...
+
+
+
+Introduction In a world overflowing with data, one question quietly sits at the heart of every message we send, every prediction we make, and every system we build: how...
+
+Your email address will not be published. Required fields are marked *
+
+Comment * 
+
+Name * 
+
+Email * 
+
+Website 
+
+ Save my name, email, and website in this browser for the next time I comment.
+
+Submit Comment   
+
+
+
+Δ
+
+
+
+ Name  
+
+ Email  
+
+   Join our weekly newsletter  
+
+
+
+Building the future by creating innovative products, processing large volumes of text and extracting insights through the use of natural language processing (NLP)
+
+contact@spotintelligence.com
+
+86-90 Paul StreetEC2A 4NE LondonUnited Kingdom
+
+
+
+HomeExtractAPI & ApplicationsNLP ConsultingAboutContact
+
+BlogNLPMachine LearningDeep Learning
+
+Get a FREE PDF with expert predictions for 2026. How will natural language processing (NLP) impact businesses? What can we expect from the state-of-the-art models?
+
+Find out this and more by subscribing* to our NLP newsletter.
+
+  
+
+  
+
+* Unsubscribe to our weekly newsletter at any time. We comply with GDPR and do not share your data.
+
+By subscribing you agree to our terms & conditions.
+
+ 
+
