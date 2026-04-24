@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import time
 from concurrent.futures import ThreadPoolExecutor
 import pprint
+import chromadb
 
 input_prompt = "Give me an introduction to implementing vectorized databases for an LLM"
 
