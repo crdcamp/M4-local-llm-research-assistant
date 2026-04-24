@@ -1,3 +1,6 @@
+# GENERATED FROM CLAUDE AS A GUIDELINE
+# THIS IS TO ONLY BE USED AS REFERENCE
+
 # %% Imports (add this)
 from sentence_transformers import SentenceTransformer
 

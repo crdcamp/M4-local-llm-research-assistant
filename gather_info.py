@@ -33,7 +33,7 @@ os.makedirs(html_summary_dir, exist_ok=True)
 times = []
 
 # %% Load Model
-def load_unvectorized():
+def load_model():
     print("Loading non-vectorized model...")
     model_load_start_time = time.perf_counter()
     model = Llama(
@@ -188,7 +188,7 @@ def clean_html_text():
 
 def gather_info():
     global model
-    model = load_unvectorized()
+    model = load_model()
     search_queries_list = generate_search_queries(input_prompt)
     url_links = get_search_query_links(search_queries_list)
     get_html_text(url_links)
