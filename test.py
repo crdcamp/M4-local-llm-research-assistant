@@ -186,16 +186,10 @@ def clean_html_text():
 
     print("HTML summaries complete")
 
-def vecotrize_results():
-    # Don't forget to delete the results when you're done
-    pass
-
-def research_tool():
+def gather_info():
     global model
     model = load_unvectorized()
     search_queries_list = generate_search_queries(input_prompt)
     url_links = get_search_query_links(search_queries_list)
     get_html_text(url_links)
     clean_html_text()
-
-research_tool()
