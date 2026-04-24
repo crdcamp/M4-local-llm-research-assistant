@@ -1,11 +1,10 @@
 # %% Imports
 import os
 import sys
-from llama_cpp import Llama
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-# Ref:
-# https://www.youtube.com/watch?v=gigip1Pxf88
+from llama_cpp import Llama
+import time
+import chromadb
 
 # %% File paths
 models_dir = "models"
@@ -18,14 +17,7 @@ if not os.path.exists(models_dir):
 if not os.path.exists(summary_dir):
     print("Error: `summary` directory not found. Exiting")
 
-# %% Load embedding modfel
-embed_model = Llama(
-    model_path="models/Qwen3-Embedding-8B-Q8_0.gguf",
-    embedding=True,
-    verbose=True,
-    n_ctx = 40960,
-)
-
+# https://www.youtube.com/watch?v=gigip1Pxf88
 # %% Splitting into chunks
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=300,
@@ -34,9 +26,22 @@ text_splitter = RecursiveCharacterTextSplitter(
     is_separator_regex=False,
 )
 
+# %% Load embedding model
+embed_model = Llama(
+    model_path="models/Qwen3-Embedding-8B-Q8_0.gguf",
+    embedding=True,
+    verbose=False,
+    n_ctx = 40960,
+)
+
+# %% Embed
 for filename in os.listdir(summary_dir):
     filepath = os.path.join(summary_dir, filename)
-
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
         documents = text_splitter.create_documents([text])
+        chunks = [doc.page_content for doc in documents]
+        print(chunks)
+
+        # embeddings = embed_model.create_embedding(chunks)
+        # vectors = [item["embedding"] for i in range(len(chunks))]
