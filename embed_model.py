@@ -1,11 +1,11 @@
+# %% Imports
 import os
 import sys
-import chromadb
 from llama_cpp import Llama
 
+# %% File paths
 models_dir = "models"
 summary_dir = "data/summary"
-embed_model = f"{models_dir}/Qwen3-Embedding-8B-Q8_0.gguf"
 
 if not os.path.exists(models_dir):
     print("Error: `models` directory not found. Exiting")
@@ -13,3 +13,14 @@ if not os.path.exists(models_dir):
 
 if not os.path.exists(summary_dir):
     print("Error: `summary` directory not found. Exiting")
+
+# %% Load embedding modfel
+embed_model = Llama(
+    model_path="models/Qwen3-Embedding-8B-Q8_0.gguf",
+    embedding=True,
+    verbose=True,
+    n_ctx = 40960
+)
+
+#embedding = llm.create_embedding()
+#vector = embedding["data"][0]["embedding"]
