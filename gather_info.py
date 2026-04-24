@@ -9,7 +9,11 @@ from bs4 import BeautifulSoup
 import time
 from concurrent.futures import ThreadPoolExecutor
 import pprint
-import chromadb
+
+"""
+WE CAN ALMOST CERTAINLY USE A MUCH LIGHTER MODEL FOR THIS SECTION
+THE BIGGER MODEL SHOULD BE THE EMBEDDED ONE!
+"""
 
 input_prompt = "Give me an introduction to implementing vectorized databases for an LLM"
 
