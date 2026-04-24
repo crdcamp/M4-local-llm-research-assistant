@@ -9,9 +9,8 @@ from bs4 import BeautifulSoup
 import time
 from concurrent.futures import ThreadPoolExecutor
 import pprint
-from langchain.chains import RetrievalQA
 
-input_prompt = "Tell me about the difference between endogenous and exogenous variables in statistics"
+input_prompt = "Give me an introduction to implementing vectorized databases for an LLM"
 
 clean_html_prompt = """You are a text cleaning engine. Your sole purpose is to convert messy scraped web text into clean, semantic Markdown for a database.
 
@@ -123,7 +122,6 @@ def parse_page(url):
 
     except Exception as e:
         print(f"Error fetching {url}: {e}")
-        return None
 
 # %% Get HTML
 def get_html_text(query_url_dict):
@@ -148,14 +146,12 @@ def get_html_text(query_url_dict):
     print(f"HTML text retrieved in {total_time} seconds\n")
     times.append(total_time)
 
-    with open(html_results_path, "w") as f:
-        json.dump(html_results, f, indent=2)
-
     return html_results
 
 def clean_html_text():
     print("Cleaning HTML text...")
     for filename in os.listdir(html_text_dir):
+        print(f"Processing file: {filename}")
         file_path = os.path.join(html_text_dir, filename)
 
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -181,29 +177,19 @@ def clean_html_text():
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(cleaned_md)
 
-        # For when testing is done
         os.remove(file_path)
+        print(f"Summary complete for file: {filename}\n\n")
 
-    print("Cleaning done")
+    print("HTML summaries complete")
 
 def vecotrize_results():
-    for filename in os.listdir(html_summary_dir):
-        pass
+    # Don't forget to delete the results when you're done
+    pass
 
-# def research_tool():
-#     search_queries_list = generate_search_queries(input_prompt)
-#     url_links = get_search_query_links(search_queries_list)
-#     get_html_text(url_links)
-#     clean_html_text()
+def research_tool():
+    search_queries_list = generate_search_queries(input_prompt)
+    url_links = get_search_query_links(search_queries_list)
+    get_html_text(url_links)
+    clean_html_text()
 
-#research_tool()
-# Call all functions up to `clean_html()`
-
-# Point new function to the html results directory
-
-# Have the model clean the html text, save to a different directory,
-# then delete html text results
-
-# Put the cleaned results into RAG
-
-# Interpret RAG results
+research_tool()
