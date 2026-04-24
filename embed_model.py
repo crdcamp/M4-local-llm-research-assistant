@@ -1,10 +1,15 @@
 # %% Imports
+from itertools import islice
 import os
 import sys
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from llama_cpp import Llama
 import time
 import chromadb
+
+def chunk(arr_range, chunk_size):
+    arr_range = iter(arr_range)
+    return iter(lambda: list(islice(arr_range, chunk_size)), [])
 
 # %% File paths
 models_dir = "models"
@@ -37,11 +42,21 @@ embed_model = Llama(
 # %% Embed
 for filename in os.listdir(summary_dir):
     filepath = os.path.join(summary_dir, filename)
+    batch_size = 100
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
-        documents = text_splitter.create_documents([text])
-        chunks = [doc.page_content for doc in documents]
-        print(chunks)
 
-        # embeddings = embed_model.create_embedding(chunks)
-        # vectors = [item["embedding"] for i in range(len(chunks))]
+        documents = text_splitter.create_documents([text])
+        document_embeddings = []
+        batches = list(chunk(documents, batch_size))
+
+        for batch in batches:
+            embeddings = embed_model.create_embedding([item.page_content for item in batch])
+            documents_embeddings.extend(
+                [
+                    (document, embeddings['embedding'])
+                    for document, embeddings in zip(batch, embeddings['data'])
+                ]
+            )
+
+        all_text = [item.page_content for item in documents]
