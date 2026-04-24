@@ -32,20 +32,23 @@ os.makedirs(html_summary_dir, exist_ok=True)
 times = []
 
 # %% Load Model
-print("Loading model...")
-model_load_start_time = time.perf_counter()
-model = Llama(
-    model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
-    n_ctx = 32768,
-    max_tokens=2048,
-    verbose=False,
-    chat_format="chatml"
-)
-model_load_end_time = time.perf_counter()
+def load_unvectorized():
+    print("Loading non-vectorized model...")
+    model_load_start_time = time.perf_counter()
+    model = Llama(
+        model_path="models/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+        n_ctx = 32768,
+        max_tokens=2048,
+        verbose=False,
+        chat_format="chatml"
+    )
+    model_load_end_time = time.perf_counter()
 
-model_load_total_time = model_load_end_time - model_load_start_time
-print(f"Model loaded in {model_load_total_time} seconds\n")
-times.append(model_load_total_time)
+    model_load_total_time = model_load_end_time - model_load_start_time
+    print(f"Model loaded in {model_load_total_time} seconds\n")
+    times.append(model_load_total_time)
+
+    return model
 
 # Structured list output for `generate_search_queries`
 class SearchQueries(BaseModel):
@@ -187,6 +190,8 @@ def vecotrize_results():
     pass
 
 def research_tool():
+    global model
+    model = load_unvectorized()
     search_queries_list = generate_search_queries(input_prompt)
     url_links = get_search_query_links(search_queries_list)
     get_html_text(url_links)
