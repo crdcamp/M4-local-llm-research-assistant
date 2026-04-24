@@ -2,6 +2,10 @@
 import os
 import sys
 from llama_cpp import Llama
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# Ref:
+# https://www.youtube.com/watch?v=gigip1Pxf88
 
 # %% File paths
 models_dir = "models"
@@ -19,21 +23,20 @@ embed_model = Llama(
     model_path="models/Qwen3-Embedding-8B-Q8_0.gguf",
     embedding=True,
     verbose=True,
-    n_ctx = 40960
+    n_ctx = 40960,
 )
 
-# %% Read markdown file function
-def read_md(md_file):
-    with open(md_file, 'r', encoding='utf-8') as f:
-        md_content = f
-    return md_content
+# %% Splitting into chunks
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=300,
+    chunk_overlap=50,
+    length_function=len,
+    is_separator_regex=False,
+)
 
+for filename in os.listdir(summary_dir):
+    filepath = os.path.join(summary_dir, filename)
 
-# DO NOT RUN THIS YET!!!
-# Embed model with
-def embed_model():
-    for file in os.listdir(summary_dir)
-        with open(md_file, 'r', encoding='utf-8') as f:
-            md_content = f
-            embedding = llm.create_embedding(md_content)
-            #vector = embedding["data"][0]["embedding"]
+    with open(filepath, 'r', encoding='utf-8') as f:
+        text = f.read()
+        documents = text_splitter.create_documents([text])
