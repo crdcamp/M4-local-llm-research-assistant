@@ -22,5 +22,10 @@ embed_model = Llama(
     n_ctx = 40960
 )
 
+def read_md(md_file):
+    with open(md_file, 'r', encoding='utf-8') as f:
+        md_content = f
+    return md_content
+
 #embedding = llm.create_embedding()
 #vector = embedding["data"][0]["embedding"]
