@@ -32,14 +32,20 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 # %% Load embedding model
+print("Loading embed model")
 embed_model = Llama(
-    model_path="models/Qwen3-Embedding-8B-Q8_0.gguf",
+    model_path="models/Qwen3-Embedding-8B-Q4_K_M.gguf",
     embedding=True,
     verbose=False,
     n_ctx = 40960,
+    n_batch=2048
 )
 
+# REDO THIS ENTIRELY
+# FOCUS ON GETTING IT WORKING WITH ONE DOCUMENT
+# BEFORE TRYING ALL OF THEM
 # %% Embed
+print("Embedding...")
 for filename in os.listdir(summary_dir):
     filepath = os.path.join(summary_dir, filename)
     batch_size = 100
@@ -47,7 +53,7 @@ for filename in os.listdir(summary_dir):
         text = f.read()
 
         documents = text_splitter.create_documents([text])
-        document_embeddings = []
+        documents_embeddings = []
         batches = list(chunk(documents, batch_size))
 
         for batch in batches:
