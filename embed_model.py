@@ -5,6 +5,7 @@ import sys
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from llama_cpp import Llama
 import chromadb
+import time
 
 # %% File paths
 models_dir = "models"
@@ -32,7 +33,7 @@ embed_model = Llama(
     model_path="models/Qwen3-Embedding-8B-Q4_K_M.gguf",
     embedding=True,
     verbose=False,
-    n_ctx = 40960,
+    n_ctx=40960
 )
 
 # %% Test embedding file setup
@@ -59,7 +60,31 @@ embed_model.create_embedding(
     [item.page_content for item in documents][:1]
 )
 
+# %% Small test embedding
+# So we're getting the same error here... hmmmmmm
+# .embed seems to work with only one field at a time...
+# So, we might just have to do it that way
+embeddings = embed_model.embed (["Hello", "World"])
 
+# %% Final test embedding
+batch_size = 200
+documents_embeddings = []
+batches = list(chunk(documents, batch_size))
+
+start = time.time()
+for batch in batches:
+    embeddings = embed_model.create_embedding([item.page_content for item in batch])
+    documents_embeddings.extend(
+        [
+            (document, embeddings['embedding'])
+            for document, embeddings in zip(batch, embeddings['data'])
+        ]
+    )
+end = time.time()
+
+all_text = [item.page_content for item in documents]
+char_per_sec = len(''.join(all_text) / (end-start))
+print(f"Time: {end-start:.2f} seconds / {char_per_sec:,.2f} chars/second")
 
 
 
