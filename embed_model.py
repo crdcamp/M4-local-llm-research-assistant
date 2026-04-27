@@ -4,12 +4,7 @@ import os
 import sys
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from llama_cpp import Llama
-import time
 import chromadb
-
-def chunk(arr_range, chunk_size):
-    arr_range = iter(arr_range)
-    return iter(lambda: list(islice(arr_range, chunk_size)), [])
 
 # %% File paths
 models_dir = "models"
@@ -38,12 +33,41 @@ embed_model = Llama(
     embedding=True,
     verbose=False,
     n_ctx = 40960,
-    n_batch=2048
 )
 
-# REDO THIS ENTIRELY
-# FOCUS ON GETTING IT WORKING WITH ONE DOCUMENT
-# BEFORE TRYING ALL OF THEM
+# %% Test embedding file setup
+test_file_path = "data/summary/httpsawsamazoncomwhatisvectordatabases.md"
+with open(test_file_path, 'r', encoding='utf-8') as test_file:
+    test_md_content = test_file.read()
+
+
+def chunk(arr_range, chunk_size):
+    arr_range = iter(arr_range)
+    return iter(lambda: list(islice(arr_range, chunk_size)), [])
+
+documents = text_splitter.create_documents([test_md_content])
+
+# Show some properties of what we've just created
+print(len(documents))
+print(type(documents))
+print(documents[5])
+
+# %% Test embedding creation
+embed_model.create_embedding(
+    # The following can take in a single document, or an array of documents.
+    # Since we're only doing a single document, we're giving it an array of one
+    [item.page_content for item in documents][:1]
+)
+
+
+
+
+
+
+
+
+
+
 # %% Embed
 print("Embedding...")
 for filename in os.listdir(summary_dir):
