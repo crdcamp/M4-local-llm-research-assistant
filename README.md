@@ -12,5 +12,6 @@ To summarize, I'm trying to create an extremely scaled down version of [Perplexi
 # The Models I'm Using
 
 * [bartowski/Qwen2.5-7B-Instruct-Q4_K_M.gguf](https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/blob/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf)
+* [Qwen/Qwen3-Embedding-8B-GGUF](https://huggingface.co/Qwen/Qwen3-Embedding-8B-GGUF?show_file_info=Qwen3-Embedding-8B-Q6_K.gguf)
 
 # Post-Project Conclusions
