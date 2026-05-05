@@ -10,9 +10,16 @@ import sys
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from llama_cpp import Llama
 
-# For later use
+# For later use (maybe, I think I'm moving to llama-server instead)
 import chromadb
 import time
+
+from itertools import islice
+
+
+def chunk(arr_range, chunk_size):
+    arr_range = iter(arr_range)
+    return iter(lambda: list(islice(arr_range, chunk_size)), [])
 
 # %% File paths
 models_dir = "models"
@@ -37,28 +44,28 @@ text_splitter = RecursiveCharacterTextSplitter(
 # %% Load embedding model
 print("Loading embed model")
 embed_model = Llama(
-    model_path="models/Qwen3-Embedding-8B-Q4_K_M.gguf",
+    model_path="models/gte-Qwen2-7B-instruct-Q6_K.gguf",
     embedding=True,
     verbose=False,
     n_ctx=40960
 )
 
-# %% Test embedding file setup
-test_file_path = "data/summary/httpsawsamazoncomwhatisvectordatabases.md"
-with open(test_file_path, 'r', encoding='utf-8') as test_file:
-    test_md_content = test_file.read()
+# # %% Test embedding file setup
+# test_file_path = "data/summary/httpsawsamazoncomwhatisvectordatabases.md"
+# with open(test_file_path, 'r', encoding='utf-8') as test_file:
+#     test_md_content = test_file.read()
 
 
-def chunk(arr_range, chunk_size):
-    arr_range = iter(arr_range)
-    return iter(lambda: list(islice(arr_range, chunk_size)), [])
+# def chunk(arr_range, chunk_size):
+#     arr_range = iter(arr_range)
+#     return iter(lambda: list(islice(arr_range, chunk_size)), [])
 
-documents = text_splitter.create_documents([test_md_content])
+# documents = text_splitter.create_documents([test_md_content])
 
-# Show some properties of what we've just created
-print(len(documents))
-print(type(documents))
-print(documents[1])
+# # Show some properties of what we've just created
+# print(len(documents))
+# print(type(documents))
+# print(documents[1])
 
 
 # %% Single input embedding test
