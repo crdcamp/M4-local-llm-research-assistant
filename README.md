@@ -15,3 +15,23 @@ To summarize, I'm trying to create an extremely scaled down version of [Perplexi
 * [Qwen/Qwen3-Embedding-8B-GGUF](https://huggingface.co/Qwen/Qwen3-Embedding-8B-GGUF?show_file_info=Qwen3-Embedding-8B-Q6_K.gguf)
 
 # Post-Project Conclusions
+
+This project (unsurprisingly) ended up with a lot more things to do than anticipated, many of which I'm going to cover in a new repository. Essentially, my initial idea of webscraping the internet and feeding those results into a model for it to use were successful.
+
+However, there's a billion things that can be improved upon here, including:
+
+## Web scraping refinement
+
+Perfecting the web scraping was not a massive priority here, yet it could be greatly improved upon. As of now, I'm only grabbing HTML text matching the `p` (paragraph) tag. These results are then fed into the model to summarize them (as a temporary fix for webscraping) in preparation for embedding the model with the given information. Embedding the model is where I ran into some issues and has now been reassigned to a new project. This is where I'll create a full pipeline that involves scraping the data, creating a vector database for the relevant material, and embedding the model with said material.
+
+The web search results as of now are unused for this reason, as feeding the raw text is not an option for me. This would defeat the purpose of an efficient system for local AI. So, I'm expanding on this project in [this repository](https://github.com/crdcamp/llama-cpp-llm-embedding).
+
+## Embedding Pipeline
+
+As I've already touched on, this project ended up leading into embedding the relevant info for the user's query. As a result, the project began expanding futher than its initial goal: Gathering website content and presenting it to a local model to ensure more accurate results. While the initial goal has been accomplished, embedding the model would be the next step.
+
+## Final Concerns
+
+This project has the potential to branch into a billion different hand-made capabilities for local models. From web scraping, to embedding, to RAG, to context management and a bunch of other things... I think there is still much to be done.
+
+Regardless, the baseline requirements have been met. Moreover, the webscraping code is a strong foundation that will save me a lot of time implementing further improvements here. All in all, this project is considered concluded and will likely lead to several other repositories that build upon this idea.
