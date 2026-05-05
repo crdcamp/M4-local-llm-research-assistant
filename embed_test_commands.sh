@@ -12,7 +12,9 @@ for model in "$EMBED_MODEL_DIR"*; do
     if [[ "$model" == *"$TARGET_MODEL" ]]; then
         TARGET_MODEL_DIR="$EMBED_MODEL_DIR$TARGET_MODEL"
         echo -e "TARGET MODEL FOUND: $TARGET_MODEL_DIR\nEmbedding...\n"
+
+
     else
-        echo "MODEL NOT FOUND\n"
+        echo "MODEL NOT FOUND"
     fi
 done
