@@ -44,7 +44,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 # %% Load embedding model
 print("Loading embed model")
 embed_model = Llama(
-    model_path="models/gte-Qwen2-7B-instruct-Q6_K.gguf",
+    model_path="models/Qwen3-Embedding-4B-q8_0.gguf",
     embedding=True,
     verbose=False,
     n_ctx=40960
