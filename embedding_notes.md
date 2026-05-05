@@ -21,3 +21,9 @@ restrict to only support embedding use case; **use only with dedicated embedding
 `--embd-gemma-default`
 
 use default EmbeddingGemma model (note: can download weights from the internet)
+
+# Example Commands
+
+```terminal
+llama-embedding -m models/embed_models/Qwen3-Embedding-8B-Q6_K.gguf -e -p "Hello World" --verbose-prompt -ngl 99
+```
